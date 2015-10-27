@@ -26,7 +26,7 @@ import java.io.OutputStreamWriter;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Allows to connect with CyberSource Gateway and provides its response.
+ * Allows with CyberSource Gateway and provides its response.
  * 
  * @author fzubair
  */
@@ -95,8 +95,6 @@ class InAppConnection {
 						SDKGatewayError error = SDKGatewayErrorMapping.getGatewayError(result.reasonCode);
 						if (result.reasonCode.equals(REASON_CODE_MISSING_FIELD)) {
 							error.setErrorExtraMessage(result.missingField);
-						} else if (result.reasonCode.equals(REASON_CODE_INVALID_FIELD)) {
-							error.setErrorExtraMessage(result.invalidField);
 						} else {
 							error.setErrorExtraMessage(result.icsMessage.icsRmsg);
 						}
@@ -126,7 +124,7 @@ class InAppConnection {
 				//SDKGateway.getGateway();
 				switch (response.getType()) {
 				case SDK_ANDROID_PAY_TRANSACTION:
-					connectionCallback.onConnectionFinished(response);
+					connectionCallback.onApiConnectionFinished(response);
 					break;
 /*				case SDK_NVP_TRANSACTION:
 						connectionCallback.onNvpTransactionFinished(response);

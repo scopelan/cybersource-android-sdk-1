@@ -75,8 +75,7 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
         if (cardData != null) {
             SDKCardData cardManual = cardData;
             card = new InAppCard(cardManual.getCardNumber(), cardManual.getCardExpirationMonth(),
-                    cardManual.getCardExpirationYear(), cardManual.getCardBrandType(), DEFAULT_CARD_CV_INDICATOR,
-                    cardManual.getCvv());
+                    cardManual.getCardExpirationYear(), cardManual.getCardBrandType(), cardManual.getCvv());
         }
 
         InAppEncryptPaymentDataService inAppEncryptPaymentDataService = new InAppEncryptPaymentDataService(true, null);

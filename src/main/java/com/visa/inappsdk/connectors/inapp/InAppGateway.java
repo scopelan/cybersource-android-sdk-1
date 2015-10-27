@@ -77,7 +77,7 @@ class InAppGateway extends SDKGateway implements TransactionResultReceiver.Recei
             case InAppConnectionService.SERVICE_RESULT_CODE_SDK_RESPONSE:
                 SDKGatewayResponse response = (SDKGatewayResponse) resultData
                         .getParcelable(InAppConnectionService.SERVICE_RESULT_RESPONSE_KEY);
-                connectionCallback.onConnectionFinished(response);
+                connectionCallback.onApiConnectionFinished(response);
                 break;
             case InAppConnectionService.SERVICE_RESULT_CODE_SDK_ERROR:
                 SDKError error = (SDKError) resultData

@@ -15,14 +15,12 @@ public class InAppCard implements InAppBaseModel {
 	public final String EXPIRATION_MONTH = "expirationMonth";
 	public final String EXPIRATION_YEAR = "expirationYear";
 	public final String CARD_TYPE = "cardType";
-	public final String CV_INDICATOR = "cvIndicator";
 	public final String CV_NUMBER = "cvNumber";
 
 	public String accountNumber;
 	public String expirationMonth;
 	public String expirationYear;
 	public SDKCardBrandType cardType;
-	public String cvIndicator;
 	public String cvNumber;
 
 	/**
@@ -30,16 +28,14 @@ public class InAppCard implements InAppBaseModel {
 	 * @param expirationMonth
 	 * @param expirationYear
 	 * @param cardType
-	 * @param cvIndicator
 	 * @param cvNumber
 	 */
 	public InAppCard(String accountNumber, String expirationMonth, String expirationYear,
-					 SDKCardBrandType cardType, String cvIndicator, String cvNumber) {
+					 SDKCardBrandType cardType, String cvNumber) {
 		this.accountNumber = accountNumber;
 		this.expirationMonth = expirationMonth;
 		this.expirationYear = expirationYear;
 		this.cardType = cardType;
-		this.cvIndicator = cvIndicator;
 		this.cvNumber = cvNumber;
 	}
 
@@ -56,9 +52,6 @@ public class InAppCard implements InAppBaseModel {
 			if (this.expirationYear != null) {
 				card.addTextNode(card.getNamespace(), EXPIRATION_YEAR, this.expirationYear);
 			}
-			if (this.cvIndicator != null) {
-				card.addTextNode(card.getNamespace(), CV_INDICATOR, this.cvIndicator);
-			}
 			if (this.cvNumber != null) {
 				card.addTextNode(card.getNamespace(), CV_NUMBER, this.cvNumber);
 			}
@@ -70,7 +63,7 @@ public class InAppCard implements InAppBaseModel {
 
 	private boolean validateObject() {
 		return !(this.accountNumber == null && this.expirationMonth == null && this.expirationYear == null
-				&& this.cardType == null && this.cvIndicator == null && this.cvNumber == null);
+				&& this.cardType == null && this.cvNumber == null);
 	}
 
 	private boolean checkIfCardTypeIsValid() {

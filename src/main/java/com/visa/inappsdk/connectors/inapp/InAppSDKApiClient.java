@@ -24,7 +24,7 @@ public class InAppSDKApiClient {
     private final String merchantID;
     private final SDKConnectionCallback connectionCallback;
 
-    // endpoint API to be used once the connect method is invoked
+    // endpoint API to be used once the 'performApi' method is invoked
     public enum Api {API_ENCRYPTION, API_ANDROID_PAY_TRANSACTION}
 
     private InAppSDKApiClient(Builder builder) {
@@ -48,7 +48,7 @@ public class InAppSDKApiClient {
 
     private void setActiveCurrentUrl(){
             InAppConnectionData.PAYMENTS_CURRENT_URL = (this.environment == Environment.ENV_PROD) ?
-                    InAppConnectionData.PAYMENTS_PROD_URL : InAppConnectionData.PAYMENTS_TEST_URL_NEW;
+                    InAppConnectionData.PAYMENTS_PROD_URL : InAppConnectionData.PAYMENTS_TEST_URL;
     }
 
     private void setGatewayMerchantID(){
@@ -59,7 +59,7 @@ public class InAppSDKApiClient {
         InAppGateway.dispose();
     }
 
-    public boolean connect(Api api, SDKTransactionObject transactionObject, String messageSignature){
+    public boolean performApi(Api api, SDKTransactionObject transactionObject, String messageSignature){
         if(api == null)
             throw new NullPointerException("API must not be null");
         if(transactionObject == null)

@@ -100,7 +100,7 @@ public class InAppSDKApiClientTest {
 
     @Test
     public void testConnect() throws Exception {
-/*        assertTrue(apiClient.connect(InAppSDKApiClient.Api.API_ENCRYPTION, SDKTransactionObject.
+/*        assertTrue(apiClient.performApi(InAppSDKApiClient.Api.API_ENCRYPTION, SDKTransactionObject.
                 createTransactionObject(SDKTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
                 .setMerchantReferenceCode("Android_Sample_Code" + "_" + Long.toString(System.currentTimeMillis())) // you can set it to anything meaningful
                 .setCardData(prepareDummyCardData()) // card data to be encrypted
@@ -111,7 +111,7 @@ public class InAppSDKApiClientTest {
     public void testApiClientConnectThrowsNullAPIException() throws Exception {
         try
         {
-            apiClient.connect(null, null, "DUMMY_MESSAGE_SIGNATURE");
+            apiClient.performApi(null, null, "DUMMY_MESSAGE_SIGNATURE");
             Assert.fail("Should have thrown Null API Exception");
         }
         catch(NullPointerException e)
@@ -124,7 +124,7 @@ public class InAppSDKApiClientTest {
     public void testApiClientConnectThrowsNullTransactionObjectException() throws Exception {
         try
         {
-            apiClient.connect(InAppSDKApiClient.Api.API_ENCRYPTION, null, "DUMMY_MESSAGE_SIGNATURE");
+            apiClient.performApi(InAppSDKApiClient.Api.API_ENCRYPTION, null, "DUMMY_MESSAGE_SIGNATURE");
             Assert.fail("Should have thrown Null Transaction Object Exception");
         }
         catch(NullPointerException e)
@@ -141,7 +141,7 @@ public class InAppSDKApiClientTest {
                 .build();
         try
         {
-            apiClient.connect(InAppSDKApiClient.Api.API_ENCRYPTION, transactionObject, "DUMMY_MESSAGE_SIGNATURE");
+            apiClient.performApi(InAppSDKApiClient.Api.API_ENCRYPTION, transactionObject, "DUMMY_MESSAGE_SIGNATURE");
             Assert.fail("Should have thrown Null CardData Exception");
         }
         catch(NullPointerException e)
@@ -158,7 +158,7 @@ public class InAppSDKApiClientTest {
                 .build();
         try
         {
-            apiClient.connect(InAppSDKApiClient.Api.API_ENCRYPTION, transactionObject, null);
+            apiClient.performApi(InAppSDKApiClient.Api.API_ENCRYPTION, transactionObject, null);
             Assert.fail("Should have thrown Invalid Message Signature Exception");
         }
         catch(NullPointerException e)

@@ -30,6 +30,6 @@ public interface SDKConnectionCallback{
 	 * 
 	 * @param response
 	 */
-	public abstract void onConnectionFinished(SDKGatewayResponse response);
+	public abstract void onApiConnectionFinished(SDKGatewayResponse response);
 
 }
