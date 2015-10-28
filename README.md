@@ -51,7 +51,7 @@ SDKCardData cardData = new SDKCardData.Builder(CARD_NUMBER,
 apiClient.performApi(InAppSDKApiClient.Api.API_ENCRYPTION, transactionObject, generateSignature(transactionObject));
 ```
 
-5) To get a response back, the Activity/fragment should implement the SDKConnectionCallback interface.
+5) To get a response back, the Activity/fragment should implement the `SDKApiConnectionCallback` interface.
 
 ```java
 @Override
