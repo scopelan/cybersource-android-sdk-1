@@ -1,13 +1,10 @@
 package com.visa.inappsdk.connectors.inapp;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.visa.inappsdk.connectors.inapp.connection.InAppConnectionData;
-import com.visa.inappsdk.connectors.inapp.transaction.InAppTransactionObject;
-import com.visa.inappsdk.datamodel.SDKGateway;
 import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
-import com.visa.inappsdk.datamodel.transaction.callbacks.SDKConnectionCallback;
+import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 
 import java.lang.ref.WeakReference;
 
@@ -22,7 +19,7 @@ public class InAppSDKApiClient {
     public enum Environment {ENV_TEST, ENV_PROD};
     private final Environment environment;
     private final String merchantID;
-    private final SDKConnectionCallback connectionCallback;
+    private final SDKApiConnectionCallback connectionCallback;
 
     // endpoint API to be used once the 'performApi' method is invoked
     public enum Api {API_ENCRYPTION, API_ANDROID_PAY_TRANSACTION}
@@ -84,7 +81,7 @@ public class InAppSDKApiClient {
         private final WeakReference<Context> context;
         private final Environment environment;
         private final String merchantID;
-        private SDKConnectionCallback connectionCallback;
+        private SDKApiConnectionCallback connectionCallback;
         private String transactionNamespace = null;
 
         public Builder(Context context, Environment environment, String merchantID){
@@ -102,7 +99,7 @@ public class InAppSDKApiClient {
             return this;
         }
 
-        public InAppSDKApiClient.Builder setSDKConnectionCallback(SDKConnectionCallback connectionCallback) {
+        public InAppSDKApiClient.Builder setSDKConnectionCallback(SDKApiConnectionCallback connectionCallback) {
             this.connectionCallback = connectionCallback;
             return this;
         }

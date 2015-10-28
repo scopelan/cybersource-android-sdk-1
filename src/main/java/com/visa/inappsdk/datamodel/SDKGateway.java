@@ -1,7 +1,7 @@
 package com.visa.inappsdk.datamodel;
 
 import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
-import com.visa.inappsdk.datamodel.transaction.callbacks.SDKConnectionCallback;
+import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 
 /**
  * Abstract Gateway API
@@ -40,7 +40,7 @@ public abstract class SDKGateway {
 	 * @return true if a transaction is already in progress
 	 */
 	public abstract boolean performEncryption(SDKTransactionObject transactionObject,
-                                                 SDKConnectionCallback applicationConnectionCallback);
+                                                 SDKApiConnectionCallback applicationConnectionCallback);
 
 	/**
 	 * Cleans the gateway instance.

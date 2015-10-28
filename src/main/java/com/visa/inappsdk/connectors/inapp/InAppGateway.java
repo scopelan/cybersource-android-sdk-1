@@ -9,7 +9,7 @@ import com.visa.inappsdk.connectors.inapp.receivers.TransactionResultReceiver;
 import com.visa.inappsdk.datamodel.SDKGateway;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponse;
 import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
-import com.visa.inappsdk.datamodel.transaction.callbacks.SDKConnectionCallback;
+import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 
 /**
  * Created by fzubair on 10/6/2015.
@@ -22,7 +22,7 @@ class InAppGateway extends SDKGateway implements TransactionResultReceiver.Recei
 
     protected String messageSignature;
     protected String merchantId;
-    private SDKConnectionCallback connectionCallback;
+    private SDKApiConnectionCallback connectionCallback;
     private TransactionResultReceiver resultReceiver;
 
     public static InAppGateway getGateway() {
@@ -30,7 +30,7 @@ class InAppGateway extends SDKGateway implements TransactionResultReceiver.Recei
     }
 
     @Override
-    public boolean performEncryption(SDKTransactionObject transactionObject, SDKConnectionCallback applicationConnectionCallback) {
+    public boolean performEncryption(SDKTransactionObject transactionObject, SDKApiConnectionCallback applicationConnectionCallback) {
         if(transactionInProgress)
             return transactionInProgress;
         if (transactionObject == null)

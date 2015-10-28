@@ -13,7 +13,7 @@ import com.visa.inappsdk.connectors.inapp.responses.InAppResponseObject;
 import com.visa.inappsdk.datamodel.SDKGatewayErrorMapping;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponse;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponseType;
-import com.visa.inappsdk.datamodel.transaction.callbacks.SDKConnectionCallback;
+import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 import com.visa.inappsdk.soap.connection.SDKConnectionConstants;
 import com.visa.inappsdk.soap.parser.SDKSoapParser;
 
@@ -32,7 +32,7 @@ import javax.net.ssl.HttpsURLConnection;
  */
 class InAppConnection {
 
-	static SDKConnectionCallback connectionCallback;
+	static SDKApiConnectionCallback connectionCallback;
 
 	/** Reason code: 100 */
 	private static String REASON_CODE_OK = "100";
@@ -50,7 +50,7 @@ class InAppConnection {
 	 * @param envelope - Envelope that will be send to Gateway
 	 * @param delegate - used to notify user when given operation will finish
 	 */
-	public static void connection(final InAppBaseEnvelope envelope, SDKConnectionCallback delegate) {
+	public static void connection(final InAppBaseEnvelope envelope, SDKApiConnectionCallback delegate) {
 		connectionCallback = delegate;
 		new ConnectionAsyncTask().execute(envelope);
 	}

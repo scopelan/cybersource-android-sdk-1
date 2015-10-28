@@ -18,7 +18,6 @@ import com.visa.inappsdk.connectors.inapp.responses.InAppResponseObject;
 import com.visa.inappsdk.datamodel.SDKGatewayErrorMapping;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponse;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponseType;
-import com.visa.inappsdk.datamodel.transaction.callbacks.SDKConnectionCallback;
 import com.visa.inappsdk.soap.connection.SDKConnectionConstants;
 import com.visa.inappsdk.soap.parser.SDKSoapParser;
 
@@ -26,7 +25,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.lang.ref.WeakReference;
 
 import javax.net.ssl.HttpsURLConnection;
 

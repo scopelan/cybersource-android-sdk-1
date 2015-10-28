@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 
  * @author fzubair
  */
-public interface SDKConnectionCallback{
+public interface SDKApiConnectionCallback {
 
 	/**
 	 * Called when an error occurred caused by sending/receiving a request. It
