@@ -3,7 +3,7 @@ This is a private repo for the CyberSource InApp SDK, it will be moved under Cyb
 
 **SDK On-boarding and Perform API**
 
-1) To initiate any requests with the SDK, we need to create and Api Client that will make Api requests on our behalf.
+1) To initiate any requests with the SDK, we need to create an Api Client that will make Api requests on our behalf.
 The InApp SDK Api client can be built as follows:
 
 ```java
