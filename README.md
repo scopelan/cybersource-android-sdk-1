@@ -83,6 +83,7 @@ public void onApiConnectionFinished(SDKGatewayResponse response)
 }
 ```
 **OR**
+
 In case of an error:
 
 ```java
