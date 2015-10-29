@@ -15,7 +15,7 @@ Jus add this line to your app's `build.gradle` inside the `dependencies` section
 
 ### Eclipse
 
-1. Download the Android SDK jar file (cybersource-inapp-android-X.X.x.jar) from cybersource.com/inapp-sdk.
+1. Download the Android SDK jar file (cybersource-inapp-android-x.x.x.jar) from cybersource.com/inapp-sdk.
 3. Include the `cybersource-inapp-android-X.X.x.jar` into the `libs` folder of your Android application project.
 
 
