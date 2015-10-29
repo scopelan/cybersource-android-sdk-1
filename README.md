@@ -7,9 +7,11 @@ This is a private repo for the CyberSource InApp SDK, it will be moved under Cyb
 
 Jus add this line to your app's `build.gradle` inside the `dependencies` section as follows:
 
+```groovy
     dependencies {
         compile 'com.cybersource:cybersource-inapp-android:+'
     }
+```
 
 ### Eclipse
 
