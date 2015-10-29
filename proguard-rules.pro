@@ -18,6 +18,8 @@
     public protected *;
 }
 
+-keep class com.visa.inappsdk.connectors.inapp.InAppGateway
+
 -keepclassmembernames class * {
     java.lang.Class class$(java.lang.String);
     java.lang.Class class$(java.lang.String, boolean);
