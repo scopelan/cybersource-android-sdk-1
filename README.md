@@ -1,7 +1,24 @@
 # cybersource-android-sdk
 This is a private repo for the CyberSource InApp SDK, it will be moved under CyberSource when it goes public
 
-**SDK On-boarding and Perform API**
+## SDK Installation
+
+### Android Studio (or Gradle)
+
+Jus add this line to your app's `build.gradle` inside the `dependencies` section as follows:
+
+    dependencies {
+        compile 'com.cybersource:cybersource-inapp-android:+'
+    }
+
+### Eclipse
+
+1. Download the Android SDK jar file (cybersource-inapp-android-X.X.x.jar) from cybersource.com/inapp-sdk.
+3. Include the `cybersource-inapp-android-X.X.x.jar` into the `libs` folder of your Android application project.
+
+
+## SDK Usage
+Once the installation is succesfully complete. Please follow this section on how to program an Android app with this SDK.
 
 1) To initiate any requests with the SDK, we need to create an Api Client that will make Api requests on our behalf.
 The InApp SDK Api client can be built as follows:
