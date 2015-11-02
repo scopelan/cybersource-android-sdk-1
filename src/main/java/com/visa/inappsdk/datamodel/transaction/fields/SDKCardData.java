@@ -172,7 +172,7 @@ public final class SDKCardData{
 		private String expirationMonth;
 		private String expirationYear;
 		private final String cvv;
-		private final String zip;
+		private String zip;
 
 		// optional
 		private SDKCardBrandType cardBrandType;
@@ -181,7 +181,7 @@ public final class SDKCardData{
 		private SDKCardTokenizationMethod tokenizationMethod;
 
 		public Builder(String cardNumber, String expirationMonth, String expirationYear,
-					   String cvv, String zip) throws SDKInvalidCardException {
+					   String cvv) throws SDKInvalidCardException {
 			if(SDKCardUtils.isValid(cardNumber)) {
 				this.cardNumber = cardNumber;
 			}
@@ -189,9 +189,13 @@ public final class SDKCardData{
                 this.expirationMonth = expirationMonth;
 				this.expirationYear = expirationYear;
 			}
-			this.zip = zip;
 			this.cvv = cvv;
 			setBrandAndLastFourDigits();
+		}
+
+		public SDKCardData.Builder setCardZipCode(String zip) {
+			this.zip = zip;
+			return this;
 		}
 
 		public SDKCardData.Builder setCardBrandType(SDKCardBrandType cardBrandType) {

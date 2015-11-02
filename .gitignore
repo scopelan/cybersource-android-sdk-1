@@ -25,5 +25,8 @@ Thumbs.db
 # Android Studio
 *.iml
 
+# Proguard files
+*.map
+
 #NDK
 obj/
