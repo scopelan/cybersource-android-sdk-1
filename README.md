@@ -56,7 +56,8 @@ SDKTransactionObject
 SDKCardData cardData = new SDKCardData.Builder(CARD_NUMBER,
                                                CARD_EXPIRATION_MONTH,
                                                CARD_EXPIRATION_YEAR,
-                                               CARD_CVV, CARD_ZIP)
+                                               CARD_CVV)
+                                               .setCardZipCode(CARD_ZIP) // optional
                                                .build();
 ```
 
