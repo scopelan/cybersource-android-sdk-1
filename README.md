@@ -55,9 +55,10 @@ SDKTransactionObject
 ```java
 SDKCardData cardData = new SDKCardData.Builder(CARD_NUMBER,
                                                CARD_EXPIRATION_MONTH, // MM
-                                               CARD_EXPIRATION_YEAR, // YYYY
-                                               CARD_CVV) // XXX
+                                               CARD_EXPIRATION_YEAR) // YYYY
+                                               .setCardCVV(CARD_CVV) // XXX - optional
                                                .setCardZipCode(CARD_ZIP) // optional
+                                               .setCardType(SDKCardType.PAN) //optional - if token, this must be set to SDKCardType.TOKEN
                                                .build();
 ```
 
