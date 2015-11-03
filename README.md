@@ -58,7 +58,7 @@ SDKCardData cardData = new SDKCardData.Builder(CARD_NUMBER,
                                                CARD_EXPIRATION_YEAR) // YYYY
                                                .setCardCVV(CARD_CVV) // XXX - optional
                                                .setCardZipCode(CARD_ZIP) // optional
-                                               .setCardType(SDKCardType.PAN) //optional - if token, this must be set to SDKCardType.TOKEN
+                                               .setCardType(SDKCardType.PAN) //optional - if token then not optional and must be set to SDKCardType.TOKEN
                                                .build();
 ```
 
