@@ -45,7 +45,7 @@ public class InAppSDKApiClient {
 
     private void setActiveCurrentUrl(){
             InAppConnectionData.PAYMENTS_CURRENT_URL = (this.environment == Environment.ENV_PROD) ?
-                    InAppConnectionData.PAYMENTS_PROD_URL : InAppConnectionData.PAYMENTS_TEST_URL;
+                    InAppConnectionData.PAYMENTS_PROD_URL : InAppConnectionData.PAYMENTS_TEST_URL_NEW;
     }
 
     private void setGatewayMerchantID(){
