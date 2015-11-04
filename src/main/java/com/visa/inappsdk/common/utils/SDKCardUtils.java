@@ -73,9 +73,6 @@ public class SDKCardUtils {
         if( month.length() != 2 || year.length() < 4)
             throw new SDKInvalidCardException("Invalid Card Date format");
 
-        // replace 0 of month from 01 to 09
-/*        if(month.charAt(0) == '0')
-            month = String.valueOf(month.charAt(1));*/
         int checkYear = Integer.parseInt(year);
 		int checkMonth = Integer.parseInt(month);
         if (checkMonth < 1 || checkMonth > 12)

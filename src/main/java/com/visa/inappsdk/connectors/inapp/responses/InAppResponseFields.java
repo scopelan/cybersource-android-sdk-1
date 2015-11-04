@@ -6,7 +6,7 @@ package com.visa.inappsdk.connectors.inapp.responses;
  * 
  * Created by fzubair on 10/8/2015.
  */
-public class InAppReponseFields {
+public class InAppResponseFields {
 	// Gateway Reply Main Element
 	protected static final String REPLY_MESSAGE = "c:replyMessage";
 	protected static final String NVP_REPLY = "c:nvpReply";

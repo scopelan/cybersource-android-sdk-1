@@ -15,12 +15,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashMap;
 
@@ -37,7 +35,7 @@ import javax.xml.transform.stream.StreamResult;
  * 
  * Created by fzubair on 10/8/2015.
  */
-public final class InAppResponseObject extends InAppReponseFields {
+public final class InAppResponseObject extends InAppResponseFields {
 
 	private final static String EMPTY_STRING = "";
 
@@ -87,19 +85,7 @@ public final class InAppResponseObject extends InAppReponseFields {
 														SDKGatewayResponseType type) {
 
 		Document doc = parseResponse(inputStream);
-		DOMSource domSource = new DOMSource(doc);
-		StringWriter writer = new StringWriter();
-		StreamResult streamResult = new StreamResult(writer);
-		TransformerFactory tf = TransformerFactory.newInstance();
-		Transformer transformer = null;
-		try {
-			transformer = tf.newTransformer();
-			transformer.transform(domSource, streamResult);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-        Log.d("NVP Response", writer.toString());
+        getResponseStringWriter(doc);
 
 		if (doc != null) {
 
@@ -204,20 +190,7 @@ public final class InAppResponseObject extends InAppReponseFields {
 																  SDKGatewayResponseType type) {
 
 		Document doc = parseResponse(inputStream);
-		DOMSource domSource = new DOMSource(doc);
-		StringWriter writer = new StringWriter();
-		StreamResult streamResult = new StreamResult(writer);
-		TransformerFactory tf = TransformerFactory.newInstance();
-		Transformer transformer = null;
-		try {
-			transformer = tf.newTransformer();
-			transformer.transform(domSource, streamResult);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		Log.d("Encrypt Response", writer.toString());
-
+        getResponseStringWriter(doc);
 
 		if (doc != null) {
 
@@ -240,6 +213,21 @@ public final class InAppResponseObject extends InAppReponseFields {
 		} else {
 			return null;
 		}
+	}
+
+	private static void getResponseStringWriter(Document doc) {
+		DOMSource domSource = new DOMSource(doc);
+		StringWriter writer = new StringWriter();
+		StreamResult streamResult = new StreamResult(writer);
+		TransformerFactory tf = TransformerFactory.newInstance();
+		Transformer transformer = null;
+		try {
+			transformer = tf.newTransformer();
+			transformer.transform(domSource, streamResult);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Log.d("SOAP Response", writer.toString());
 	}
 
 

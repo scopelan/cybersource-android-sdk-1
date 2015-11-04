@@ -19,7 +19,7 @@ public class InAppConnectionData {
     /** SOAP Payments PROD endpoint address. */
     public final static String PAYMENTS_PROD_URL = "https://mobile.ic3.com/mpos/transactionProcessor/";
     /** SOAP Payments BYZ TEST endpoint address. */
-    public final static String PAYMENTS_TEST_URL_BYZ = "https://sl73mpossapq001.visa.com:2021/mpos/transactionProcessor";
+    public final static String PAYMENTS_TEST_URL_BYZ = "https://sl73mpossapq001.visa.com:2021/mpos/transactionProcessor/";
     /** SOAP Payments TEST endpoint address. */
     public final static String PAYMENTS_TEST_URL_NEW = "https://sl73ntaapq005.visa.com:8443/commerce/1.x/transactionProcessor/";
 

@@ -12,31 +12,43 @@ import com.visa.inappsdk.common.utils.SDKCardUtils;
 public final class SDKCardData{
 
 	//	required
-	private final String cardNumber;
-	private final String expirationMonth;
-	private final String expirationYear;
-	private final String cvv;
-	private final String zip;
+	private String cardNumber;
+	private String expirationMonth;
+	private String expirationYear;
 
 	// optional
+	private final String cvv;
+    private final String lastFourDigits;
+    private final SDKCardType cardType;
+/*	private final String zip;
 	private final SDKCardBrandType cardBrandType;
-	private final String lastFourDigits;
 	private final SDKCardFundingType fundingType;
-	private final SDKCardTokenizationMethod tokenizationMethod;
+	private final SDKCardTokenizationMethod tokenizationMethod;*/
 
 	/**
 	 * Creates an instance of object to store keyed card data. Also it sets a
 	 */
-	private SDKCardData(Builder builder) {
-		this.cardNumber = builder.cardNumber;
-		this.expirationMonth = builder.expirationMonth;
-		this.expirationYear = builder.expirationYear;
+	private SDKCardData(Builder builder) throws SDKInvalidCardException{
+        this.cardType = builder.cardType != null ? builder.cardType : SDKCardType.PAN;
+        if(this.cardType == SDKCardType.PAN) {
+            if (SDKCardUtils.isValid(builder.cardNumber)) {
+                this.cardNumber = builder.cardNumber;
+            }
+        }
+        else {
+            this.cardNumber = builder.cardNumber;
+        }
+        if(SDKCardUtils.isValidExpirationDate(builder.expirationMonth, builder.expirationYear)) {
+            this.expirationMonth = builder.expirationMonth;
+            this.expirationYear = builder.expirationYear;
+        }
 		this.cvv = builder.cvv;
-		this.zip = builder.zip;
-		this.cardBrandType = builder.cardBrandType;
-		this.lastFourDigits = builder.lastFourDigits;
+        this.lastFourDigits = builder.lastFourDigits;
+/*		this.zip = builder.zip;
+		this.cardBrandType = builder.cardBrandType != null ? builder.cardBrandType
+                : SDKCardUtils.getBrandByCardNumber(this.cardNumber);
 		this.fundingType = builder.fundingType;
-		this.tokenizationMethod = builder.tokenizationMethod;
+		this.tokenizationMethod = builder.tokenizationMethod;*/
 	}
 
 	public String getCardNumber() {
@@ -51,13 +63,21 @@ public final class SDKCardData{
 		return expirationYear;
 	}
 
-	public String getZip() {
-		return zip;
-	}
-
 	public String getCvv() {
 		return cvv;
 	}
+
+    public SDKCardType getCardType() {
+        return cardType;
+    }
+
+    public String getLastFourDigits() {
+        return lastFourDigits;
+    }
+
+/*    public String getZip() {
+        return zip;
+    }
 
 	public SDKCardTokenizationMethod getTokenizationMethod() {
 		return tokenizationMethod;
@@ -69,11 +89,7 @@ public final class SDKCardData{
 
 	public SDKCardFundingType getFundingType() {
 		return fundingType;
-	}
-
-	public String getLastFourDigits() {
-		return lastFourDigits;
-	}
+	}*/
 
 	/*
 	 * (non-Javadoc)
@@ -87,11 +103,11 @@ public final class SDKCardData{
 		result = prime * result + ((cvv == null) ? 0 : cvv.hashCode());
 		result = prime * result + ((expirationMonth == null) ? 0 : expirationMonth.hashCode());
 		result = prime * result + ((expirationYear == null) ? 0 : expirationYear.hashCode());
-		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
+        result = prime * result + ((lastFourDigits == null) ? 0 : lastFourDigits.hashCode());
+/*		result = prime * result + ((zip == null) ? 0 : zip.hashCode());
 		result = prime * result + ((cardBrandType == null) ? 0 : cardBrandType.hashCode());
-		result = prime * result + ((lastFourDigits == null) ? 0 : lastFourDigits.hashCode());
 		result = prime * result + ((fundingType == null) ? 0 : fundingType.hashCode());
-		result = prime * result + ((tokenizationMethod == null) ? 0 : tokenizationMethod.hashCode());
+		result = prime * result + ((tokenizationMethod == null) ? 0 : tokenizationMethod.hashCode());*/
 		return result;
 	}
 
@@ -139,7 +155,14 @@ public final class SDKCardData{
 		} else if (!expirationYear.equals(other.expirationYear)) {
 			return false;
 		}
-		if (zip == null) {
+        if (lastFourDigits == null) {
+            if (other.lastFourDigits != null) {
+                return false;
+            }
+        } else if (!lastFourDigits.equals(other.lastFourDigits)) {
+            return false;
+        }
+/*		if (zip == null) {
 			if (other.zip != null) {
 				return false;
 			}
@@ -149,51 +172,49 @@ public final class SDKCardData{
 		if (cardBrandType != other.cardBrandType) {
 			return false;
 		}
-		if (lastFourDigits == null) {
-			if (other.lastFourDigits != null) {
-				return false;
-			}
-		} else if (!lastFourDigits.equals(other.lastFourDigits)) {
-			return false;
-		}
 		if (fundingType != other.fundingType) {
 			return false;
 		}
 		if (tokenizationMethod != other.tokenizationMethod) {
 			return false;
-		}
+		}*/
 
 		return true;
 	}
 
 	public static class Builder {
 		//	required
-		private String cardNumber;
-		private String expirationMonth;
-		private String expirationYear;
-		private final String cvv;
-		private String zip;
+		private final String cardNumber;
+		private final String expirationMonth;
+		private final String expirationYear;
 
 		// optional
+		private String cvv;
+        private SDKCardType cardType;
+        private String lastFourDigits;
+/*		private String zip;
 		private SDKCardBrandType cardBrandType;
-		private String lastFourDigits;
 		private SDKCardFundingType fundingType;
-		private SDKCardTokenizationMethod tokenizationMethod;
+		private SDKCardTokenizationMethod tokenizationMethod;*/
 
-		public Builder(String cardNumber, String expirationMonth, String expirationYear,
-					   String cvv) throws SDKInvalidCardException {
-			if(SDKCardUtils.isValid(cardNumber)) {
-				this.cardNumber = cardNumber;
-			}
-			if(SDKCardUtils.isValidExpirationDate(expirationMonth, expirationYear)) {
-                this.expirationMonth = expirationMonth;
-				this.expirationYear = expirationYear;
-			}
-			this.cvv = cvv;
-			setBrandAndLastFourDigits();
+		public Builder(String cardNumber, String expirationMonth, String expirationYear) {
+            this.cardNumber = cardNumber;
+            this.expirationMonth = expirationMonth;
+            this.expirationYear = expirationYear;
+			setLastFourDigits();
 		}
 
-		public SDKCardData.Builder setCardZipCode(String zip) {
+		public SDKCardData.Builder setCardCVV(String cvv) {
+			this.cvv = cvv;
+			return this;
+		}
+
+        public SDKCardData.Builder setCardType(SDKCardType cardType) {
+            this.cardType = cardType;
+            return this;
+        }
+
+/*		public SDKCardData.Builder setCardZipCode(String zip) {
 			this.zip = zip;
 			return this;
 		}
@@ -211,19 +232,18 @@ public final class SDKCardData{
 		public SDKCardData.Builder setCardTokenizationMethod(SDKCardTokenizationMethod method) {
 			this.tokenizationMethod = method;
 			return this;
-		}
+		}*/
 
-		public SDKCardData build(){
+		public SDKCardData build() throws SDKInvalidCardException{
 			return new SDKCardData(this);
 		}
 
-		private void setBrandAndLastFourDigits() throws SDKInvalidCardException {
-			this.cardBrandType = SDKCardUtils.getBrandByCardNumber(cardNumber);
-			// if there are at least 4 digits
-			if (cardNumber != null && cardNumber.length() >= 4) {
-				lastFourDigits = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
-			}
-		}
+        private void setLastFourDigits() {
+            // if there are at least 4 digits
+            if (cardNumber != null && cardNumber.length() >= 4) {
+                lastFourDigits = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
+            }
+        }
 	}
 
 }

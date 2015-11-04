@@ -171,7 +171,7 @@ public class InAppSDKApiClientTest {
         SDKCardData cardData = null;
         try {
             cardData = new SDKCardData.Builder(CARD_NUMBER, CARD_EXPIRATION_MONTH,
-                    CARD_EXPIRATION_YEAR, CARD_ZIP, CARD_CVV)
+                    CARD_EXPIRATION_YEAR, CARD_CVV)
                     .build();
         } catch (SDKInvalidCardException e) {
             // Handle exception if the card is invalid

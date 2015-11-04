@@ -1,6 +1,7 @@
 package com.visa.inappsdk.connectors.inapp.datamodel;
 
 import com.visa.inappsdk.common.SDKCardBrandType;
+import com.visa.inappsdk.datamodel.transaction.fields.SDKCardType;
 import com.visa.inappsdk.soap.model.SDKXMLParentNode;
 
 /**
@@ -16,27 +17,29 @@ public class InAppCard implements InAppBaseModel {
 	public final String EXPIRATION_YEAR = "expirationYear";
 	public final String CARD_TYPE = "cardType";
 	public final String CV_NUMBER = "cvNumber";
+	public final String POSTAL_CODE = "postalCode";
+	public final String TYPE = "type";
 
 	public String accountNumber;
 	public String expirationMonth;
 	public String expirationYear;
-	public SDKCardBrandType cardType;
 	public String cvNumber;
+	public SDKCardType type;
 
 	/**
 	 * @param accountNumber
 	 * @param expirationMonth
 	 * @param expirationYear
-	 * @param cardType
 	 * @param cvNumber
+     * @param type
 	 */
 	public InAppCard(String accountNumber, String expirationMonth, String expirationYear,
-					 SDKCardBrandType cardType, String cvNumber) {
+					 String cvNumber, SDKCardType type) {
 		this.accountNumber = accountNumber;
 		this.expirationMonth = expirationMonth;
 		this.expirationYear = expirationYear;
-		this.cardType = cardType;
 		this.cvNumber = cvNumber;
+		this.type = type;
 	}
 
 	@Override
@@ -55,19 +58,23 @@ public class InAppCard implements InAppBaseModel {
 			if (this.cvNumber != null) {
 				card.addTextNode(card.getNamespace(), CV_NUMBER, this.cvNumber);
 			}
-			if (checkIfCardTypeIsValid()) {
-				card.addTextNode(card.getNamespace(), CARD_TYPE, this.cardType.getBrandCode());
-			}
+/*			if (this.zipCode != null) {
+				card.addTextNode(card.getNamespace(), POSTAL_CODE, this.zipCode);
+			}*/
+/*			if (this.type != null) {
+				card.addTextNode(card.getNamespace(), TYPE, this.type.toString());
+			}*/
+/*			if (checkIfCardTypeIsValid()) {
+				card.addTextNode(card.getNamespace(), CARD_TYPE, this.cardBrandType.getBrandCode());
+			}*/
 		}
 	}
 
 	private boolean validateObject() {
-		return !(this.accountNumber == null && this.expirationMonth == null && this.expirationYear == null
-				&& this.cardType == null && this.cvNumber == null);
+		return !(this.accountNumber == null && this.expirationMonth == null && this.expirationYear == null);
 	}
 
-	private boolean checkIfCardTypeIsValid() {
-		return (this.cardType != null && this.cardType != SDKCardBrandType.SDK_OTHER
-				&& this.cardType != SDKCardBrandType.SDK_INVALID_CARD_NUMBER);
-	}
+/*	private boolean checkIfCardTypeIsValid() {
+		return (this.cardBrandType != null && this.cardBrandType != SDKCardBrandType.SDK_INVALID_CARD_NUMBER);
+	}*/
 }
