@@ -49,10 +49,4 @@ public abstract class SDKGateway {
 		gateway = null;
 	};
 
-    //public abstract void updateSignature(String signature);
-
-    //public abstract void setSignatureEnabled(boolean isSignatureEnabled);
-
-    //public abstract String getGatewayAmountString(BigDecimal value);
-
 }

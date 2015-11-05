@@ -90,7 +90,7 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
         encryptedPayment.setPaymentSolution(VMposMessageSignature.PAYMENT_SOLUTION_DEFAULT_VALUE);*/
 
         InAppEncryptionTransactionObject inAppEncryptionTransactionObject = new InAppEncryptionTransactionObject(
-                merchantId, merchantReferenceCode, null, card, inAppEncryptPaymentDataService, CLIENT_LIBRARY/*, encryptedPayment*/);
+                merchantId, merchantReferenceCode, card, inAppEncryptPaymentDataService, CLIENT_LIBRARY/*, encryptedPayment*/);
         return inAppEncryptionTransactionObject;
     }
 

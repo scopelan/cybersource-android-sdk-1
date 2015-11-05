@@ -15,28 +15,6 @@ public abstract class SDKTransactionObject {
 	protected String transactionDate;
 	protected SDKCardData cardData;
 
-/*	protected SDKGatewayResponse response;
-	protected String linkToTransactionId;
-	protected String authCode;*/
-
-/*	protected BigDecimal totalAmount = BigDecimal.ZERO;
-	protected BigDecimal subtotalAmount = BigDecimal.ZERO;
-	protected BigDecimal totalTax = BigDecimal.ZERO;
-    protected BigDecimal refundAmount = BigDecimal.ZERO;*/
-
-/*	protected VMposCyberSourceShipTo shipTo;
-	protected VMposCyberSourceBillTo billTo;
-	protected List<VMposItem> items;
-
-	protected VMposMerchantDetails merchantDetails;
-	protected VMposPurchaseDetails purchaseDetails;
-
-	protected VMposTransactionNote note;
-	protected VMposTransactionObject nextTransaction;
-	protected VMposTransactionObject previousTransaction;
-	protected VMposSignature signature;*/
-
-
 	SDKTransactionObject(Builder builder) {
 	}
 
@@ -74,16 +52,6 @@ public abstract class SDKTransactionObject {
 		switch (type) {
 			case SDK_TRANSACTION_ENCRYPTION:
                 return new SDKEncryptTransactionObject.Builder();
-
-/*            case SDK_TRANSACTION_HISTORY:
-                return new SDKHistoryTransactionObject();
-
-            case SDK_TRANSACTION_REFUND:
-                return new SDKRefundTransactionObject();
-
-            case SDK_TRANSACTION_VOID:
-                return new SDKVoidTransactionObject();
-*/
             default:
                 return new SDKEncryptTransactionObject.Builder();
         }

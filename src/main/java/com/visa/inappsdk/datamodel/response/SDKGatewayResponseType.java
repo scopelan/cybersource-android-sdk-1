@@ -7,7 +7,7 @@ package com.visa.inappsdk.datamodel.response;
  */
 public enum SDKGatewayResponseType {
 
-    SDK_ENCRYPTION, SDK_ANDROID_PAY_TRANSACTION, SDK_NVP_TRANSACTION;
+    SDK_ENCRYPTION;
 
 
 }

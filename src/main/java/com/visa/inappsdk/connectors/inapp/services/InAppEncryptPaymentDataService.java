@@ -11,8 +11,6 @@ public class InAppEncryptPaymentDataService extends InAppBaseService {
 
 	public final String OBJECT_NAME = "encryptPaymentDataService";
 	public final String RUN = "run";
-	public final String COMMERCE_INDICATOR = "commerceIndicator";
-	public final String BILL_PAYMENT = "billPayment";
 
 	public String run;
     String commerceIndicator;
@@ -33,9 +31,6 @@ public class InAppEncryptPaymentDataService extends InAppBaseService {
 			SDKXMLParentNode sdkxmlParentNode = request.addNode(request.getNamespace(), OBJECT_NAME);
 			if (this.run != null) {
 				sdkxmlParentNode.addAttribute(null, RUN, this.run);
-			}
-			if (this.commerceIndicator != null) {
-				sdkxmlParentNode.addTextNode(sdkxmlParentNode.getNamespace(), COMMERCE_INDICATOR, commerceIndicator);
 			}
 		}
 	}

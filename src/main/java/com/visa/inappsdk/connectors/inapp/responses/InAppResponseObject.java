@@ -59,53 +59,14 @@ public final class InAppResponseObject extends InAppResponseFields {
 	public String requestID; // all
 	public String requestToken; // all
 	public InAppIcsMessageReply icsMessage; // all
-	public HashMap<String, String> nvpMap; // all
 
 	// Objects
-	public InAppCcAuthReply ccAuthReply;
 	public InAppCcEncryptedPaymentDataReply ccEncryptedPaymentReply;
-	public InAppPurchaseTotalsReply purchaseTotals;
-
-    private HashMap<String, String> nvpResponseMap;
 
 	// Response type
 	public SDKGatewayResponseType type;
 
 	private InAppResponseObject() {
-	}
-
-	/**
-	 * Parse AuthorizationResponse to VMposCyberSourceResponseObject
-	 *
-	 * @param inputStream - Stream with response that will be parsed
-	 * @param type - type of response
-	 * @return
-	 */
-	public static InAppResponseObject createNVPResponse(InputStream inputStream,
-														SDKGatewayResponseType type) {
-
-		Document doc = parseResponse(inputStream);
-        getResponseStringWriter(doc);
-
-		if (doc != null) {
-
-			InAppResponseObject result = new InAppResponseObject();
-			result.type = type;
-
-			NodeList nl = doc.getElementsByTagName(NVP_REPLY);
-
-			Element replay = (Element)(nl.item(0));
-			String nvpResponseString = replay.getFirstChild().getNodeValue();
-            HashMap<String, String> nvpMap = null;
-            if(nvpResponseString != null) {
-                nvpMap = parseNVPResponseString(nvpResponseString);
-            }
-            setNVPDefaultFields(result, nvpMap);
-
-			return result;
-		} else {
-			return null;
-		}
 	}
 
     /**
@@ -275,20 +236,6 @@ public final class InAppResponseObject extends InAppResponseFields {
 		}
 	}
 
-    private static void setNVPDefaultFields(InAppResponseObject result, HashMap<String, String> reply) {
-        result.decision = getDecisionType(reply.get(NVP_DECISION));
-        result.merchantReferenceCode = reply.get(NVP_MERCHANT_REFERENCE_CODE);
-        result.reasonCode = reply.get(NVP_REASON_CODE);
-        result.requestID = reply.get(NVP_REQUEST_ID);
-        result.requestToken = reply.get(NVP_REQUEST_TOKEN);
-        result.nvpMap = reply;
-
-/*        String icsMsg = reply.get(ICS_MESSAGE);
-        if (icsMsg != null) {
-            result.icsMessage = reply.get(ICS_RMSG);
-        }*/
-    }
-
 
 	private static SDKResponseDecision getDecisionType(String text) {
 		if (text != null) {
@@ -306,13 +253,6 @@ public final class InAppResponseObject extends InAppResponseFields {
 		} else {
 			return null;
 		}
-	}
-
-	private static InAppPurchaseTotalsReply getPurchaseTotalsReply(Element element) {
-		InAppPurchaseTotalsReply result = new InAppPurchaseTotalsReply();
-		result.currency = getValue(element, PURCHASE_TOTALS_CURRENCY);
-
-		return result;
 	}
 
     private static InAppIcsMessageReply getICSMessageReply(Element element) {
@@ -455,7 +395,6 @@ public final class InAppResponseObject extends InAppResponseFields {
 		SDKGatewayResponse response = new SDKGatewayResponse.Builder
                 (type, sdkResponseReasonCode, result.requestID, result.requestToken)
                 .setDecision(result.decision)
-                .setNvpMap(result.nvpMap)
                 .build();
         return response;
     }

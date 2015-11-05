@@ -129,12 +129,7 @@ public class InAppConnectionService extends IntentService {
                         || result.reasonCode.equals(REASON_CODE_DISCOUNTED_OK)) { // -- Faizan -- Added this line since the server has a code
                     // for discounted successful transaction as: 120
 
-                    SDKGatewayResponse response = null;
-                    if(result.type == SDKGatewayResponseType.SDK_NVP_TRANSACTION)
-                        response = result.convertNVPToGatewayResponse(result);
-                    else
-                        response = result.convertToGatewayResponse();
-
+                    SDKGatewayResponse response = result.convertToGatewayResponse();
                     resultObject = response;
 
                 } else {
@@ -169,7 +164,6 @@ public class InAppConnectionService extends IntentService {
             SDKGatewayResponse response = (SDKGatewayResponse)result;
             resultData.putParcelable(SERVICE_RESULT_RESPONSE_KEY, response);
             switch (response.getType()) {
-                case SDK_ANDROID_PAY_TRANSACTION:
                 case SDK_ENCRYPTION:
                     resultReceiver.send(SERVICE_RESULT_CODE_SDK_RESPONSE, resultData);
                     break;

@@ -78,12 +78,7 @@ public class SDKBaseSoapEnvelope implements Serializable{
 	private void prepareEnvelopeNode() {
 		// create node and add default namespaces with prefixes
 		envelopeNode = new SDKXMLParentNode(NS_SOAPENV, ENVELOPE_TAG);
-        // -- Faizan -- commented out a few lines to remove some prefixes to match apple pay xml
-		//envelopeNode.declarePrefix(NS_PREFIX_SOAPENC, NS_SOAPENC);
 		envelopeNode.declarePrefix(NS_PREFIX_SOAPENV, NS_SOAPENV);
-		//envelopeNode.declarePrefix(NS_PREFIX_XSD, NS_XSD);
-		//envelopeNode.declarePrefix(NS_PREFIX_XSI, NS_XSI);
-		// add header and body nodes to the envelope node
 		envelopeNode.addNode(header);
 		envelopeNode.addNode(body);
 	}

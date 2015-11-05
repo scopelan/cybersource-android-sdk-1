@@ -11,16 +11,12 @@ import com.visa.inappsdk.soap.model.SDKXMLParentNode;
  * Created by fzubair on 10/8/2015.
  */
 public class InAppEncryptionTransactionObject extends InAppTransactionObject {
-	
-	public InAppPurchaseTotals purchaseTotals;
+
 	public InAppCard card;
 	public String clientLibrary;
 
-/*    public VMposCyberSourceBillTo billTo;
-	public VMposCyberSourceShipTo shipTo;*/
 	public InAppEncryptPaymentDataService encryptPaymentDataService;
 
-	private final String LINK_TO_REQUEST = "linkToRequest";
     private final String CLIENT_LIBRARY = "clientLibrary";
     public final String PAYMENT_SOLUTION = "paymentSolution";
 
@@ -32,26 +28,19 @@ public class InAppEncryptionTransactionObject extends InAppTransactionObject {
 	 * 
 	 * @param merchantId
 	 * @param merchantReferenceCode
-	 * @param //vMposWebServiceBillTo
-	 * @param vMposWebServicePurchaseTotals
 	 * @param InAppWebServiceCard
 	 * @param encryptPaymentDataService
 	 * @param //shipTo
 	 */
 	public InAppEncryptionTransactionObject(String merchantId, String merchantReferenceCode,
-											/*VMposCyberSourceBillTo vMposWebServiceBillTo,*/ InAppPurchaseTotals vMposWebServicePurchaseTotals,
 											InAppCard InAppWebServiceCard,
-											InAppEncryptPaymentDataService encryptPaymentDataService, /*VMposCyberSourceShipTo shipTo,*/
-											String clientLibrary/*, VMposEncryptedPayment encryptedPayment,*/) {
+											InAppEncryptPaymentDataService encryptPaymentDataService,
+											String clientLibrary) {
 		this.merchantID = merchantId;
 		this.merchantReferenceCode = merchantReferenceCode;
 		this.clientLibrary = clientLibrary;
-		this.purchaseTotals = vMposWebServicePurchaseTotals;
 		this.card = InAppWebServiceCard;
-        //this.billTo = vMposWebServiceBillTo;
-		//this.shipTo = shipTo;
 		this.encryptPaymentDataService = encryptPaymentDataService;
-        //this.encryptedPayment = encryptedPayment;
 	}
 
 	@Override
@@ -60,18 +49,6 @@ public class InAppEncryptionTransactionObject extends InAppTransactionObject {
 		if(this.clientLibrary != null){
 			request.addTextNode(request.getNamespace(), CLIENT_LIBRARY, this.clientLibrary);
 		}
-/*        if (this.billTo != null) {
-            this.billTo.updateEnvelope(request);
-        }
-		if (this.shipTo != null) {
-			this.shipTo.updateEnvelope(request);
-		}*/
-		if (this.purchaseTotals != null) {
-			this.purchaseTotals.updateEnvelope(request);
-		}
-/*        if (this.encryptedPayment != null) {
-            this.encryptedPayment.updateEnvelope(request);
-        }*/
 		if (this.card != null) {
 			this.card.updateEnvelope(request);
 		}
