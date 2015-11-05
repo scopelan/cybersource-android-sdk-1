@@ -70,7 +70,7 @@ public class SDKCardUtils {
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1; // since JANUARY = 0 for Calendar class
 
-        if( month.length() != 2 || year.length() < 4)
+        if( month.length() != 2 || year.length() != 4)
             throw new SDKInvalidCardException("Invalid Card Date format");
 
         int checkYear = Integer.parseInt(year);
