@@ -22,7 +22,7 @@ public class InAppSDKApiClient {
     private final SDKApiConnectionCallback connectionCallback;
 
     // endpoint API to be used once the 'performApi' method is invoked
-    public enum Api {API_ENCRYPTION, API_ANDROID_PAY_TRANSACTION}
+    public enum Api {API_ENCRYPTION}
 
     private InAppSDKApiClient(Builder builder) {
         this.context = builder.context;
@@ -70,8 +70,6 @@ public class InAppSDKApiClient {
         switch (api){
             case API_ENCRYPTION:
                 return InAppGateway.getGateway().performEncryption(transactionObject, this.connectionCallback);
-            case API_ANDROID_PAY_TRANSACTION:
-                return false;
             default:
                 return false;
         }

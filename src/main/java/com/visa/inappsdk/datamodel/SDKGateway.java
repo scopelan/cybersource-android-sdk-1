@@ -16,7 +16,7 @@ public abstract class SDKGateway {
 	 *
 	 * @return Instance of the Gateway
 	 */
-	public static SDKGateway getGateway() {
+	protected static SDKGateway getGateway() {
 /*		if (gateway == null) {
 			gateway = new InAppGateway();
 		}*/
@@ -28,7 +28,7 @@ public abstract class SDKGateway {
      *
      * @param gatewayInstance a gateway instance to be set
      */
-	public static void setGateway(SDKGateway gatewayInstance) {
+	protected static void setGateway(SDKGateway gatewayInstance) {
 		gateway = gatewayInstance;
 	}
 
@@ -39,7 +39,7 @@ public abstract class SDKGateway {
 	 * during operation
 	 * @return true if a transaction is already in progress
 	 */
-	public abstract boolean performEncryption(SDKTransactionObject transactionObject,
+	protected abstract boolean performEncryption(SDKTransactionObject transactionObject,
                                                  SDKApiConnectionCallback applicationConnectionCallback);
 
 	/**

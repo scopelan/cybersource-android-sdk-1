@@ -30,7 +30,7 @@ class InAppGateway extends SDKGateway implements TransactionResultReceiver.Recei
     }
 
     @Override
-    public boolean performEncryption(SDKTransactionObject transactionObject, SDKApiConnectionCallback applicationConnectionCallback) {
+    protected boolean performEncryption(SDKTransactionObject transactionObject, SDKApiConnectionCallback applicationConnectionCallback) {
         if(transactionInProgress)
             return transactionInProgress;
         if (transactionObject == null)

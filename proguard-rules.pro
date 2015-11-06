@@ -25,6 +25,10 @@
     java.lang.Class class$(java.lang.String, boolean);
 }
 
+-keepclassmembers class com.visa.inappsdk.connectors.inapp.InAppSDKApiClient {
+        *;
+}
+
 -keepclasseswithmembernames,includedescriptorclasses class * {
     native <methods>;
 }
