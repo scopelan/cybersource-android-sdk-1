@@ -16,10 +16,11 @@ Jus add this line to your app's `build.gradle` inside the `dependencies` section
 ### Eclipse
 
 1. Download the Android SDK jar file (cybersource-inapp-android-x.x.x.jar) from cybersource.com/inapp-sdk.
-3. Include the `cybersource-inapp-android-x.x.x.jar` into the `libs` folder of your Android application project.
+2. Include the `cybersource-inapp-android-x.x.x.jar` into the `libs` folder of your Android application project.
 
 ### Certificates
 The InAppSDK expects the Android app project to have the server certificates placed in it's `assets` folder under a new directory named `certificates`.
+
 1. TEST ENVIRONMENT: Download the `.cer` file from https://mobiletest.ic3.com/mpos/transactionProcessor/
 2. PROD ENVIRONMENT: Download the `.cer` file from https://mobile.ic3.com/mpos/transactionProcessor/
 
