@@ -38,6 +38,8 @@ The InApp SDK Api client can be built as follows:
 apiClient = new InAppSDKApiClient.Builder (getActivity(),
                                           InAppSDKApiClient.Environment.ENV_TEST, API_LOGIN_ID) 
                                           .sdkConnectionCallback(this) // receive callbacks for connection results
+                                          .sdkApiProdEndpoint(PAYMENTS_PROD_URL) // option to configure PROD Endpoint
+                                          .sdkApiTestEndpoint(PAYMENTS_TEST_URL) // option to configure TEST Endpoint
                                           .transactionNamespace(TRANSACT_NAMESPACE) // optional
                                           .build();
 ```
