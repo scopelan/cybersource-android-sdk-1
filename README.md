@@ -62,9 +62,9 @@ SDKTransactionObject
 3) A card object can be created as follows:
 
 ```java
-SDKCardData cardData = new SDKCardData.Builder(CARD_NUMBER,
-                                               CARD_EXPIRATION_MONTH, // MM
-                                               CARD_EXPIRATION_YEAR) // YYYY
+SDKCardData cardData = new SDKCardData.Builder(ACCOUNT_NUMBER,
+                                               EXPIRATION_MONTH, // MM
+                                               EXPIRATION_YEAR) // YYYY
                                                .cvNumber(CARD_CVV) // optional
                                                .type(SDKCardAccountNumberType.PAN) //optional - if token then not optional and must be set to SDKCardType.TOKEN
                                                .build();
