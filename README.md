@@ -37,8 +37,8 @@ The InApp SDK Api client can be built as follows:
 // 3) API_LOGIN_ID String - merchant's API LOGIN ID 
 apiClient = new InAppSDKApiClient.Builder (getActivity(),
                                           InAppSDKApiClient.Environment.ENV_TEST, API_LOGIN_ID) 
-                                          .setSDKConnectionCallback(this) // receive callbacks for connection results
-                                          .setTransactionNamespace(TRANSACT_NAMESPACE) // optional
+                                          .sdkConnectionCallback(this) // receive callbacks for connection results
+                                          .transactionNamespace(TRANSACT_NAMESPACE) // optional
                                           .build();
 ```
 
@@ -49,9 +49,11 @@ SDKTransactionObject
   // type of transaction object 
   .createTransactionObject(SDKTransactionType.SDK_TRANSACTION_ENCRYPTION)
   //merchant reference code can be set to anything meaningful
-  .setMerchantReferenceCode("Android_Sample_Code")
+  .merchantReferenceCode("Android_Sample_Code")
   //card data to be encrypted
-  .setCardData(prepareTestCardData())
+  .cardData(prepareTestCardData())
+  //optional billing info
+  .billTo(prepareBillingInfo())
   .build();
 ```
 
@@ -66,7 +68,17 @@ SDKCardData cardData = new SDKCardData.Builder(CARD_NUMBER,
                                                .build();
 ```
 
-4) Once we have the Api client and the transaction information ready, it's time to make a call to perform a specific Api.
+4) Billing information can be created as follows:
+
+```java
+SDKBillTo billTo = new SDKBillTo.Builder()
+                .firstName("First Name")
+                .lastName("Last Name")
+                .postalCode("98052")
+                .build();
+```
+
+5) Once we have the Api client and the transaction information ready, it's time to make a call to perform a specific Api.
 
 ```java
 // parameters: 
@@ -76,7 +88,7 @@ SDKCardData cardData = new SDKCardData.Builder(CARD_NUMBER,
 apiClient.performApi(InAppSDKApiClient.Api.API_ENCRYPTION, transactionObject, generateSignature(transactionObject));
 ```
 
-5) To get a response back, the Activity/fragment should implement the `SDKApiConnectionCallback` interface.
+6) To get a response back, the Activity/fragment should implement the `SDKApiConnectionCallback` interface.
 
 ```java
 @Override
