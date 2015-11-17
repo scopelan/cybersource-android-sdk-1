@@ -41,6 +41,7 @@ apiClient = new InAppSDKApiClient.Builder (getActivity(),
                                           .sdkApiProdEndpoint(PAYMENTS_PROD_URL) // option to configure PROD Endpoint
                                           .sdkApiTestEndpoint(PAYMENTS_TEST_URL) // option to configure TEST Endpoint
                                           .transactionNamespace(TRANSACT_NAMESPACE) // optional
+                                          .connectionTimeout(5000) // optional connection time out in milliseconds
                                           .build();
 ```
 
