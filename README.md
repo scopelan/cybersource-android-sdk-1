@@ -40,8 +40,8 @@ apiClient = new InAppSDKApiClient.Builder (getActivity(),
                                           .sdkConnectionCallback(this) // receive callbacks for connection results
                                           .sdkApiProdEndpoint(PAYMENTS_PROD_URL) // option to configure PROD Endpoint
                                           .sdkApiTestEndpoint(PAYMENTS_TEST_URL) // option to configure TEST Endpoint
+                                          .sdkConnectionTimeout(5000) // optional connection time out in milliseconds
                                           .transactionNamespace(TRANSACT_NAMESPACE) // optional
-                                          .connectionTimeout(5000) // optional connection time out in milliseconds
                                           .build();
 ```
 
