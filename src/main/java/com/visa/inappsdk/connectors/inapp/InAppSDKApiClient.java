@@ -2,6 +2,7 @@ package com.visa.inappsdk.connectors.inapp;
 
 import android.content.Context;
 
+import com.visa.inappsdk.common.SDKCore;
 import com.visa.inappsdk.connectors.inapp.connection.InAppConnectionData;
 import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
 import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
@@ -26,13 +27,19 @@ public class InAppSDKApiClient {
 
     private InAppSDKApiClient(Builder builder) {
         this.context = builder.context;
+        SDKCore.initialize(builder.context);
         this.environment = builder.environment;
         this.merchantID = builder.merchantID;
-        this.connectionCallback = builder.connectionCallback;
         setGatewayMerchantID();
-        setActiveCurrentUrl();
+        this.connectionCallback = builder.connectionCallback;
         if(builder.transactionNamespace != null)
             DEFAULT_NAMESPACE = builder.transactionNamespace;
+        if(builder.apiProdEndpoint != null)
+            configureProdEndpoint(builder.apiProdEndpoint);
+        if(builder.apiTestEndpoint != null)
+            configureTestEndpoint(builder.apiTestEndpoint);
+        setActiveCurrentUrl();
+        configureConnectionTimeout(builder.connectionTimeout);
     }
 
     public static WeakReference<Context> getContext() {
@@ -46,6 +53,18 @@ public class InAppSDKApiClient {
     private void setActiveCurrentUrl(){
             InAppConnectionData.PAYMENTS_CURRENT_URL = (this.environment == Environment.ENV_PROD) ?
                     InAppConnectionData.PAYMENTS_PROD_URL : InAppConnectionData.PAYMENTS_TEST_URL;
+    }
+
+    private void configureProdEndpoint(String prodEndpoint){
+        InAppConnectionData.PAYMENTS_PROD_URL = prodEndpoint;
+    }
+
+    private void configureTestEndpoint(String testEndpoint){
+        InAppConnectionData.PAYMENTS_TEST_URL = testEndpoint;
+    }
+
+    private void configureConnectionTimeout(int timeoutMillis){
+        InAppConnectionData.connectionTimeout = timeoutMillis;
     }
 
     private void setGatewayMerchantID(){
@@ -81,6 +100,9 @@ public class InAppSDKApiClient {
         private final String merchantID;
         private SDKApiConnectionCallback connectionCallback;
         private String transactionNamespace = null;
+        private String apiProdEndpoint = null;
+        private String apiTestEndpoint = null;
+        private int connectionTimeout;
 
         public Builder(Context context, Environment environment, String merchantID){
             if(context == null)
@@ -92,13 +114,28 @@ public class InAppSDKApiClient {
             this.merchantID = merchantID;
         }
 
-        public InAppSDKApiClient.Builder setTransactionNamespace(String transactionNamespace) {
+        public InAppSDKApiClient.Builder transactionNamespace(String transactionNamespace) {
             this.transactionNamespace = transactionNamespace;
             return this;
         }
 
-        public InAppSDKApiClient.Builder setSDKConnectionCallback(SDKApiConnectionCallback connectionCallback) {
+        public InAppSDKApiClient.Builder sdkConnectionCallback(SDKApiConnectionCallback connectionCallback) {
             this.connectionCallback = connectionCallback;
+            return this;
+        }
+
+        public InAppSDKApiClient.Builder sdkApiProdEndpoint(String apiProdEndpoint) {
+            this.apiProdEndpoint = apiProdEndpoint;
+            return this;
+        }
+
+        public InAppSDKApiClient.Builder sdkApiTestEndpoint(String apiTestEndpoint) {
+            this.apiTestEndpoint = apiTestEndpoint;
+            return this;
+        }
+
+        public InAppSDKApiClient.Builder sdkConnectionTimeout(int timeoutMillis) {
+            this.connectionTimeout = timeoutMillis;
             return this;
         }
 

@@ -2,6 +2,7 @@ package com.visa.inappsdk.common.utils;
 
 import android.text.TextUtils;
 
+import com.visa.inappsdk.common.SDKCore;
 import com.visa.inappsdk.common.SDKCurrency;
 import com.visa.inappsdk.connectors.inapp.InAppSDKApiClient;
 
@@ -218,7 +219,7 @@ public class SDKUtils {
 	private static List<String> getCertificates() {
 		List<String> certificates = new ArrayList<String>();
 		try {
-			String[] files = InAppSDKApiClient.getContext().get().getAssets().list(CERTIFICATES);
+			String[] files = SDKCore.getContext().get().getAssets().list(CERTIFICATES);
 			for (String string : files) {
 				if (string.endsWith(CERT_EXT)) {
 					certificates.add(CERTIFICATES + "/" + string);
@@ -260,7 +261,7 @@ public class SDKUtils {
 			int alias = 0;
 			for (String certificate : getCertificates()) {
 				CertificateFactory cf = CertificateFactory.getInstance("X.509");
-				InputStream caInput = new BufferedInputStream(InAppSDKApiClient.getContext().get().getAssets().open(certificate));
+				InputStream caInput = new BufferedInputStream(SDKCore.getContext().get().getAssets().open(certificate));
 				Certificate ca;
 				try {
 					ca = cf.generateCertificate(caInput);

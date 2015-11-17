@@ -5,16 +5,16 @@ package com.visa.inappsdk.datamodel.transaction.fields;
  * Describes the type of Token PAN or token
  * Created by fzubair on 11/3/2015.
  */
-public enum SDKCardType {
+public enum SDKCardAccountNumberType {
     PAN("PAN"), TOKEN("token");
 
-    private String cardType;
-    private SDKCardType(String type) {
-        this.cardType = type;
+    private String cardAccountType;
+    private SDKCardAccountNumberType(String type) {
+        this.cardAccountType = type;
     }
 
     @Override
     public String toString(){
-        return cardType;
+        return cardAccountType;
     }
 }

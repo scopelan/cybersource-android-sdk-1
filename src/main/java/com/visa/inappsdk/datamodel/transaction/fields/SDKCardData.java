@@ -1,6 +1,5 @@
 package com.visa.inappsdk.datamodel.transaction.fields;
 
-import com.visa.inappsdk.common.SDKCardBrandType;
 import com.visa.inappsdk.common.exceptions.SDKInvalidCardException;
 import com.visa.inappsdk.common.utils.SDKCardUtils;
 
@@ -12,14 +11,14 @@ import com.visa.inappsdk.common.utils.SDKCardUtils;
 public final class SDKCardData{
 
 	//	required
-	private String cardNumber;
+	private String accountNumber;
 	private String expirationMonth;
 	private String expirationYear;
 
 	// optional
-	private final String cvv;
+	private final String cvNumber;
     private final String lastFourDigits;
-    private final SDKCardType cardType;
+    private final SDKCardAccountNumberType cardAccountNumberType;
 /*	private final String zip;
 	private final SDKCardBrandType cardBrandType;
 	private final SDKCardFundingType fundingType;
@@ -29,30 +28,30 @@ public final class SDKCardData{
 	 * Creates an instance of object to store keyed card data. Also it sets a
 	 */
 	private SDKCardData(Builder builder) throws SDKInvalidCardException{
-        this.cardType = builder.cardType != null ? builder.cardType : SDKCardType.PAN;
-        if(this.cardType == SDKCardType.PAN) {
-            if (SDKCardUtils.isValid(builder.cardNumber)) {
-                this.cardNumber = builder.cardNumber;
+        this.cardAccountNumberType = builder.cardAccountNumberType != null ? builder.cardAccountNumberType : SDKCardAccountNumberType.PAN;
+        if(this.cardAccountNumberType == SDKCardAccountNumberType.PAN) {
+            if (SDKCardUtils.isValid(builder.accountNumber)) {
+                this.accountNumber = builder.accountNumber;
             }
         }
         else {
-            this.cardNumber = builder.cardNumber;
+            this.accountNumber = builder.accountNumber;
         }
         if(SDKCardUtils.isValidExpirationDate(builder.expirationMonth, builder.expirationYear)) {
             this.expirationMonth = builder.expirationMonth;
             this.expirationYear = builder.expirationYear;
         }
-		this.cvv = builder.cvv;
+		this.cvNumber = builder.cvNumber;
         this.lastFourDigits = builder.lastFourDigits;
 /*		this.zip = builder.zip;
 		this.cardBrandType = builder.cardBrandType != null ? builder.cardBrandType
-                : SDKCardUtils.getBrandByCardNumber(this.cardNumber);
+                : SDKCardUtils.getBrandByCardNumber(this.accountNumber);
 		this.fundingType = builder.fundingType;
 		this.tokenizationMethod = builder.tokenizationMethod;*/
 	}
 
-	public String getCardNumber() {
-		return cardNumber;
+	public String getAccountNumber() {
+		return accountNumber;
 	}
 
 	public String getCardExpirationMonth() {
@@ -63,12 +62,12 @@ public final class SDKCardData{
 		return expirationYear;
 	}
 
-	public String getCvv() {
-		return cvv;
+	public String getCvNumber() {
+		return cvNumber;
 	}
 
-    public SDKCardType getCardType() {
-        return cardType;
+    public SDKCardAccountNumberType getCardAccountNumberType() {
+        return cardAccountNumberType;
     }
 
     public String getLastFourDigits() {
@@ -99,8 +98,8 @@ public final class SDKCardData{
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((cardNumber == null) ? 0 : cardNumber.hashCode());
-		result = prime * result + ((cvv == null) ? 0 : cvv.hashCode());
+		result = prime * result + ((accountNumber == null) ? 0 : accountNumber.hashCode());
+		result = prime * result + ((cvNumber == null) ? 0 : cvNumber.hashCode());
 		result = prime * result + ((expirationMonth == null) ? 0 : expirationMonth.hashCode());
 		result = prime * result + ((expirationYear == null) ? 0 : expirationYear.hashCode());
         result = prime * result + ((lastFourDigits == null) ? 0 : lastFourDigits.hashCode());
@@ -127,18 +126,18 @@ public final class SDKCardData{
 			return false;
 		}
 		SDKCardData other = (SDKCardData)obj;
-		if (cardNumber == null) {
-			if (other.cardNumber != null) {
+		if (accountNumber == null) {
+			if (other.accountNumber != null) {
 				return false;
 			}
-		} else if (!cardNumber.equals(other.cardNumber)) {
+		} else if (!accountNumber.equals(other.accountNumber)) {
 			return false;
 		}
-		if (cvv == null) {
-			if (other.cvv != null) {
+		if (cvNumber == null) {
+			if (other.cvNumber != null) {
 				return false;
 			}
-		} else if (!cvv.equals(other.cvv)) {
+		} else if (!cvNumber.equals(other.cvNumber)) {
 			return false;
 		}
 		if (expirationMonth == null) {
@@ -184,33 +183,33 @@ public final class SDKCardData{
 
 	public static class Builder {
 		//	required
-		private final String cardNumber;
+		private final String accountNumber;
 		private final String expirationMonth;
 		private final String expirationYear;
 
 		// optional
-		private String cvv;
-        private SDKCardType cardType;
+		private String cvNumber;
+        private SDKCardAccountNumberType cardAccountNumberType;
         private String lastFourDigits;
 /*		private String zip;
 		private SDKCardBrandType cardBrandType;
 		private SDKCardFundingType fundingType;
 		private SDKCardTokenizationMethod tokenizationMethod;*/
 
-		public Builder(String cardNumber, String expirationMonth, String expirationYear) {
-            this.cardNumber = cardNumber;
+		public Builder(String accountNumber, String expirationMonth, String expirationYear) {
+            this.accountNumber = accountNumber;
             this.expirationMonth = expirationMonth;
             this.expirationYear = expirationYear;
 			setLastFourDigits();
 		}
 
-		public SDKCardData.Builder setCardCVV(String cvv) {
-			this.cvv = cvv;
+		public SDKCardData.Builder cvNumber(String cvNumber) {
+			this.cvNumber = cvNumber;
 			return this;
 		}
 
-        public SDKCardData.Builder setCardType(SDKCardType cardType) {
-            this.cardType = cardType;
+        public SDKCardData.Builder type(SDKCardAccountNumberType accountNumberType) {
+            this.cardAccountNumberType = accountNumberType;
             return this;
         }
 
@@ -240,8 +239,8 @@ public final class SDKCardData{
 
         private void setLastFourDigits() {
             // if there are at least 4 digits
-            if (cardNumber != null && cardNumber.length() >= 4) {
-                lastFourDigits = cardNumber.substring(cardNumber.length() - 4, cardNumber.length());
+            if (accountNumber != null && accountNumber.length() >= 4) {
+                lastFourDigits = accountNumber.substring(accountNumber.length() - 4, accountNumber.length());
             }
         }
 	}

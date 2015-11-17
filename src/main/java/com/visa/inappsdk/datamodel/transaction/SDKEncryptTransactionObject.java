@@ -16,6 +16,7 @@ final class SDKEncryptTransactionObject extends SDKTransactionObject {
         this.transactionTime = builder.transactionTime;
         this.transactionDate = builder.transactionDate;
         this.cardData = builder.cardData;
+        this.billTo = builder.billTo;
 	}
 
 	public static class Builder extends SDKTransactionObject.Builder{

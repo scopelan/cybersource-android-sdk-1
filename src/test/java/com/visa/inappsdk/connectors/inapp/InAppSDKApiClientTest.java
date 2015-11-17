@@ -37,7 +37,7 @@ public class InAppSDKApiClientTest {
 
         apiClient = new InAppSDKApiClient.Builder
                 (context, InAppSDKApiClient.Environment.ENV_TEST, apiLoginID)
-                .setSDKConnectionCallback(null) // receive callbacks for connection results
+                .sdkConnectionCallback(null) // receive callbacks for connection results
                 .build();
     }
 
@@ -54,7 +54,7 @@ public class InAppSDKApiClientTest {
         {
             apiClient = new InAppSDKApiClient.Builder
                     (context, InAppSDKApiClient.Environment.ENV_TEST, apiLoginID)
-                    .setSDKConnectionCallback(null) // receive callbacks for connection results
+                    .sdkConnectionCallback(null) // receive callbacks for connection results
                     .build();
             Assert.fail("Should have thrown Invalid Merchant ID Exception");
         }
@@ -71,8 +71,8 @@ public class InAppSDKApiClientTest {
         {
             apiClient = new InAppSDKApiClient.Builder
                     (context, InAppSDKApiClient.Environment.ENV_TEST, apiLoginID)
-                    .setSDKConnectionCallback(null) // receive callbacks for connection results
-                            // .setTransactionNamespace(TRANSACT_NAMESPACE) // optional - ApiClient has a default namespace too
+                    .sdkConnectionCallback(null) // receive callbacks for connection results
+                            // .transactionNamespace(TRANSACT_NAMESPACE) // optional - ApiClient has a default namespace too
                     .build();
             Assert.fail("Should have thrown Null Context Exception");
         }
@@ -102,8 +102,8 @@ public class InAppSDKApiClientTest {
     public void testConnect() throws Exception {
 /*        assertTrue(apiClient.performApi(InAppSDKApiClient.Api.API_ENCRYPTION, SDKTransactionObject.
                 createTransactionObject(SDKTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
-                .setMerchantReferenceCode("Android_Sample_Code" + "_" + Long.toString(System.currentTimeMillis())) // you can set it to anything meaningful
-                .setCardData(prepareDummyCardData()) // card data to be encrypted
+                .merchantReferenceCode("Android_Sample_Code" + "_" + Long.toString(System.currentTimeMillis())) // you can set it to anything meaningful
+                .cardData(prepareDummyCardData()) // card data to be encrypted
                 .build(), "sdfskjdfs"));*/
     }
 
@@ -137,7 +137,7 @@ public class InAppSDKApiClientTest {
     public void testApiClientConnectThrowsNullCardDataException() throws Exception {
         SDKTransactionObject transactionObject = SDKTransactionObject.
                 createTransactionObject(SDKTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
-                .setCardData(null) // card data to be encrypted
+                .cardData(null) // card data to be encrypted
                 .build();
         try
         {
@@ -154,7 +154,7 @@ public class InAppSDKApiClientTest {
     public void testApiClientConnectThrowsInvalidMessageSignatureException() throws Exception {
         SDKTransactionObject transactionObject = SDKTransactionObject.
                 createTransactionObject(SDKTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
-                .setCardData(prepareTestCardData()) // card data to be encrypted
+                .cardData(prepareTestCardData()) // card data to be encrypted
                 .build();
         try
         {

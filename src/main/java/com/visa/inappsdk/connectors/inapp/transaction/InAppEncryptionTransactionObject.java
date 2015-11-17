@@ -1,5 +1,6 @@
 package com.visa.inappsdk.connectors.inapp.transaction;
 
+import com.visa.inappsdk.connectors.inapp.datamodel.InAppBillTo;
 import com.visa.inappsdk.connectors.inapp.datamodel.InAppCard;
 import com.visa.inappsdk.connectors.inapp.datamodel.InAppPurchaseTotals;
 import com.visa.inappsdk.connectors.inapp.services.InAppEncryptPaymentDataService;
@@ -13,6 +14,7 @@ import com.visa.inappsdk.soap.model.SDKXMLParentNode;
 public class InAppEncryptionTransactionObject extends InAppTransactionObject {
 
 	public InAppCard card;
+	public InAppBillTo billTo;
 	public String clientLibrary;
 
 	public InAppEncryptPaymentDataService encryptPaymentDataService;
@@ -28,18 +30,20 @@ public class InAppEncryptionTransactionObject extends InAppTransactionObject {
 	 * 
 	 * @param merchantId
 	 * @param merchantReferenceCode
-	 * @param InAppWebServiceCard
+	 * @param inAppWebServiceCard
+	 * @param inAppBillTo
 	 * @param encryptPaymentDataService
 	 * @param //shipTo
 	 */
 	public InAppEncryptionTransactionObject(String merchantId, String merchantReferenceCode,
-											InAppCard InAppWebServiceCard,
+											InAppCard inAppWebServiceCard, InAppBillTo inAppBillTo,
 											InAppEncryptPaymentDataService encryptPaymentDataService,
 											String clientLibrary) {
 		this.merchantID = merchantId;
 		this.merchantReferenceCode = merchantReferenceCode;
 		this.clientLibrary = clientLibrary;
-		this.card = InAppWebServiceCard;
+		this.card = inAppWebServiceCard;
+		this.billTo = inAppBillTo;
 		this.encryptPaymentDataService = encryptPaymentDataService;
 	}
 
@@ -49,6 +53,9 @@ public class InAppEncryptionTransactionObject extends InAppTransactionObject {
 		if(this.clientLibrary != null){
 			request.addTextNode(request.getNamespace(), CLIENT_LIBRARY, this.clientLibrary);
 		}
+        if (this.billTo != null) {
+            this.billTo.updateEnvelope(request);
+        }
 		if (this.card != null) {
 			this.card.updateEnvelope(request);
 		}

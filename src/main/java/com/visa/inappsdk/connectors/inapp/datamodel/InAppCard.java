@@ -1,7 +1,6 @@
 package com.visa.inappsdk.connectors.inapp.datamodel;
 
-import com.visa.inappsdk.common.SDKCardBrandType;
-import com.visa.inappsdk.datamodel.transaction.fields.SDKCardType;
+import com.visa.inappsdk.datamodel.transaction.fields.SDKCardAccountNumberType;
 import com.visa.inappsdk.soap.model.SDKXMLParentNode;
 
 /**
@@ -17,14 +16,13 @@ public class InAppCard implements InAppBaseModel {
 	public final String EXPIRATION_YEAR = "expirationYear";
 	public final String CARD_TYPE = "cardType";
 	public final String CV_NUMBER = "cvNumber";
-	public final String POSTAL_CODE = "postalCode";
 	public final String TYPE = "type";
 
 	public String accountNumber;
 	public String expirationMonth;
 	public String expirationYear;
 	public String cvNumber;
-	public SDKCardType type;
+	public SDKCardAccountNumberType type;
 
 	/**
 	 * @param accountNumber
@@ -34,7 +32,7 @@ public class InAppCard implements InAppBaseModel {
      * @param type
 	 */
 	public InAppCard(String accountNumber, String expirationMonth, String expirationYear,
-					 String cvNumber, SDKCardType type) {
+					 String cvNumber, SDKCardAccountNumberType type) {
 		this.accountNumber = accountNumber;
 		this.expirationMonth = expirationMonth;
 		this.expirationYear = expirationYear;

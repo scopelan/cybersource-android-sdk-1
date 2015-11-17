@@ -25,6 +25,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.SocketTimeoutException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -114,6 +115,7 @@ public class InAppConnectionService extends IntentService {
                     SDKConnectionConstants.XML_CONTENT_TYPE_PREFIX + envelope.getEncoding());
             urlConnection.setRequestProperty(SDKConnectionConstants.HEADER_KEY_SOAP_ACTION,
                     InAppBaseEnvelope.DEFAULT_SOAP_ACTION);
+            urlConnection.setConnectTimeout(InAppConnectionData.connectionTimeout);
 
             OutputStream os = urlConnection.getOutputStream();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, Xml.Encoding.UTF_8.name()));
@@ -149,6 +151,11 @@ public class InAppConnectionService extends IntentService {
                 error.setErrorExtraMessage(String.valueOf(responseCode));
                 resultObject = error;
             }
+        } catch (SocketTimeoutException e) {
+            e.printStackTrace();
+            SDKError error = SDKInternalError.SDK_INTERNAL_ERROR_NETWORK_CONNECTION_TIMEOUT;
+            error.setErrorExtraMessage(e.getMessage());
+            resultObject = error;
         } catch (IOException e) {
             e.printStackTrace();
             SDKError error = SDKInternalError.SDK_INTERNAL_ERROR_NETWORK_CONNECTION;

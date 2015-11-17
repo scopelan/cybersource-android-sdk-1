@@ -1,15 +1,14 @@
 package com.visa.inappsdk.connectors.inapp.envelopes;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.visa.inappsdk.common.error.SDKError;
+import com.visa.inappsdk.connectors.inapp.datamodel.InAppBillTo;
 import com.visa.inappsdk.connectors.inapp.datamodel.InAppCard;
 import com.visa.inappsdk.connectors.inapp.responses.InAppResponseObject;
 import com.visa.inappsdk.connectors.inapp.services.InAppEncryptPaymentDataService;
 import com.visa.inappsdk.connectors.inapp.transaction.InAppEncryptionTransactionObject;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponseType;
 import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
+import com.visa.inappsdk.datamodel.transaction.fields.SDKBillTo;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKCardData;
 import com.visa.inappsdk.soap.model.SDKXMLParentNode;
 
@@ -39,43 +38,19 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
 
         String merchantReferenceCode = transactionObject.getMerchantReferenceCode();
 
-        //VMposAddress address = transactionObject.getBillTo();
-        //VMposCyberSourceBillTo billTo = transactionObject.getBillTo();
-/*        if (address != null) {
-            billTo = new VMposCyberSourceBillTo(address.getFirstName(), address.getLastName(), address.getStreet(),
-                    address.getStreet2(), address.getCity(), address.getState(), address.getZip(), address.getCountry(),
-                    address.getPhone(), address.getEmail());
-        }*/
-        //-- Faizan -- if billto is null add this dummy address just to make the 'internet' and 'recurring' transaction work not needed for 'retial'
-/*        else{
-            billTo = new VMposCyberSourceBillTo(
-                    "Faizan",
-                    "Zubair",
-                    "NE",
-                    "street 2",
-                    "Bellevue", "WA", "98004",
-                    "US",
-                    "206 209 8866", "fez.zubair@gmail.com"
-            );
-        }*/
-
-/*        VMposCyberSourceShipTo shipTo = transactionObject.getShipTo();
-        VMposAddress ship = transactionObject.getShipTo() != null ? transactionObject.getShipTo() : transactionObject.getFirstTransactionObject()
-                .getShipTo();
-        if (ship != null) {
-            shipTo = new VMposCyberSourceShipTo(ship.getFirstName(), ship.getLastName(), ship.getStreet(), ship.getStreet2(),
-                    ship.getCity(), ship.getState(), ship.getZip(), ship.getCountry(), ship.getPhone(), ship.getEmail());
-        }*/
-
-/*        InAppPurchaseTotals inAppPurchaseTotals = new InAppPurchaseTotals(
-                details.getCurrency().name(), getGatewayAmountString(transactionObject.getTotalAmount()));*/
-
         SDKCardData cardData = transactionObject.getCardData();
         InAppCard card = null;
         if (cardData != null) {
-            card = new InAppCard(cardData.getCardNumber(), cardData.getCardExpirationMonth(),
-                    cardData.getCardExpirationYear(), cardData.getCvv(),
-                    cardData.getCardType());
+            card = new InAppCard(cardData.getAccountNumber(), cardData.getCardExpirationMonth(),
+                    cardData.getCardExpirationYear(), cardData.getCvNumber(),
+                    cardData.getCardAccountNumberType());
+        }
+
+        SDKBillTo billTo = transactionObject.getBillTo();
+        InAppBillTo bill = null;
+        if (billTo != null) {
+            bill = new InAppBillTo(billTo.getFirstName(), billTo.getLastName(),
+                    billTo.getPostalCode());
         }
 
         InAppEncryptPaymentDataService inAppEncryptPaymentDataService = new InAppEncryptPaymentDataService(true, null);
@@ -90,7 +65,7 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
         encryptedPayment.setPaymentSolution(VMposMessageSignature.PAYMENT_SOLUTION_DEFAULT_VALUE);*/
 
         InAppEncryptionTransactionObject inAppEncryptionTransactionObject = new InAppEncryptionTransactionObject(
-                merchantId, merchantReferenceCode, card, inAppEncryptPaymentDataService, CLIENT_LIBRARY/*, encryptedPayment*/);
+                merchantId, merchantReferenceCode, card, bill, inAppEncryptPaymentDataService, CLIENT_LIBRARY/*, encryptedPayment*/);
         return inAppEncryptionTransactionObject;
     }
 

@@ -4,12 +4,22 @@ package com.visa.inappsdk.common.error;
  * Created by fzubair on 10/7/2015.
  */
 public enum SDKInternalError implements SDKError {
-    SDK_INTERNAL_ERROR_TRANSACTION_IN_PROGRESS(1001,
-            "Another transaction is already in progress. Cancel/terminate previous transaction first."), SDK_INTERNAL_ERROR_OPERATION_NOT_AVAILABLE(
-            1002, "This operation is not available in the current version of the library."), SDK_INTERNAL_ERROR_NETWORK_CONNECTION(
-            1003, "Cannot access the network."), SDK_INTERNAL_ERROR_SERVER(1004, "Cannot contact the server."), SDK_INTERNAL_ERROR_GENERAL_FAILURE(
-            1005, "Unknown general error occured."), SDK_INTERNAL_ERROR_RESULTS_NOT_FOUND(1006, "Results not found."), SDK_INTERNAL_ERROR_NO_AUTHENTICATION_CHALLANGES_FOUND(
-            1007, "No authentication challenges found");
+    SDK_INTERNAL_ERROR_TRANSACTION_IN_PROGRESS(
+            1001, "Another transaction is already in progress. Cancel/terminate previous transaction first."),
+    SDK_INTERNAL_ERROR_OPERATION_NOT_AVAILABLE(
+            1002, "This operation is not available in the current version of the library."),
+    SDK_INTERNAL_ERROR_NETWORK_CONNECTION(
+            1003, "Cannot access the network."),
+    SDK_INTERNAL_ERROR_NETWORK_CONNECTION_TIMEOUT(
+            1004, "Network connection timed out."),
+    SDK_INTERNAL_ERROR_SERVER(
+            1005, "Cannot contact the server."),
+    SDK_INTERNAL_ERROR_GENERAL_FAILURE(
+            1006, "Unknown general error occured."),
+    SDK_INTERNAL_ERROR_RESULTS_NOT_FOUND(
+            1007, "Results not found."),
+    SDK_INTERNAL_ERROR_NO_AUTHENTICATION_CHALLANGES_FOUND(
+            1008, "No authentication challenges found");
 
     private int errorCode;
     private String errorMessage;
