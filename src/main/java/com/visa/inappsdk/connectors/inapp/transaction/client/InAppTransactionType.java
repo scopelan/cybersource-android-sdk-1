@@ -1,4 +1,4 @@
-package com.visa.inappsdk.datamodel.transaction;
+package com.visa.inappsdk.connectors.inapp.transaction.client;
 
 /**
  * Enumeration used to indicate the transaction type. Possible states:
@@ -8,6 +8,6 @@ package com.visa.inappsdk.datamodel.transaction;
  * 
  * @author fzubair
  */
-public enum SDKTransactionType {
-    SDK_TRANSACTION_ENCRYPTION
+public enum InAppTransactionType {
+    SDK_TRANSACTION_ENCRYPTION, SDK_TRANSACTION_ANDROID_PAY
 }

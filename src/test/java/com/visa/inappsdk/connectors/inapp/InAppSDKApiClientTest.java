@@ -4,8 +4,8 @@ import android.content.Context;
 import android.test.mock.MockContext;
 
 import com.visa.inappsdk.common.exceptions.SDKInvalidCardException;
-import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
-import com.visa.inappsdk.datamodel.transaction.SDKTransactionType;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionType;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKCardData;
 
 import org.junit.After;
@@ -135,8 +135,8 @@ public class InAppSDKApiClientTest {
 
     @Test
     public void testApiClientConnectThrowsNullCardDataException() throws Exception {
-        SDKTransactionObject transactionObject = SDKTransactionObject.
-                createTransactionObject(SDKTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
+        InAppTransactionObject transactionObject = InAppTransactionObject.
+                createTransactionObject(InAppTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
                 .cardData(null) // card data to be encrypted
                 .build();
         try
@@ -152,8 +152,8 @@ public class InAppSDKApiClientTest {
 
     @Test
     public void testApiClientConnectThrowsInvalidMessageSignatureException() throws Exception {
-        SDKTransactionObject transactionObject = SDKTransactionObject.
-                createTransactionObject(SDKTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
+        InAppTransactionObject transactionObject = InAppTransactionObject.
+                createTransactionObject(InAppTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
                 .cardData(prepareTestCardData()) // card data to be encrypted
                 .build();
         try

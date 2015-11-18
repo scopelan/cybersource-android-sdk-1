@@ -5,9 +5,9 @@ import com.visa.inappsdk.connectors.inapp.datamodel.InAppBillTo;
 import com.visa.inappsdk.connectors.inapp.datamodel.InAppCard;
 import com.visa.inappsdk.connectors.inapp.responses.InAppResponseObject;
 import com.visa.inappsdk.connectors.inapp.services.InAppEncryptPaymentDataService;
-import com.visa.inappsdk.connectors.inapp.transaction.InAppEncryptionTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.InAppEnvelopeEncryptionTransactionObject;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponseType;
-import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKBillTo;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKCardData;
 import com.visa.inappsdk.soap.model.SDKXMLParentNode;
@@ -22,18 +22,18 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
     InAppEncryptEnvelope() {
     }
 
-    public InAppEncryptEnvelope(SDKTransactionObject transactionObject, String merchantId, String messageSignature) {
+    public InAppEncryptEnvelope(InAppTransactionObject transactionObject, String merchantId, String messageSignature) {
         createEnvelopeHeader(merchantId, messageSignature);
-        InAppEncryptionTransactionObject encryptionTransactionObject = convertTransactionObject(transactionObject, merchantId);
+        InAppEnvelopeEncryptionTransactionObject encryptionTransactionObject = convertTransactionObject(transactionObject, merchantId);
         createEnvelopeBody(encryptionTransactionObject);
     }
 
-    private void createEnvelopeBody(InAppEncryptionTransactionObject paymentObject) {
+    private void createEnvelopeBody(InAppEnvelopeEncryptionTransactionObject paymentObject) {
         SDKXMLParentNode request = this.createRequestMessage();
         paymentObject.updateEnvelope(request);
     }
 
-    private InAppEncryptionTransactionObject convertTransactionObject(SDKTransactionObject transactionObject,
+    private InAppEnvelopeEncryptionTransactionObject convertTransactionObject(InAppTransactionObject transactionObject,
                                                                                             String merchantId) {
 
         String merchantReferenceCode = transactionObject.getMerchantReferenceCode();
@@ -64,7 +64,7 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
         encryptedPayment.setEncodedMetaData(VMposMessageSignature.MetadataEncodedValue);
         encryptedPayment.setPaymentSolution(VMposMessageSignature.PAYMENT_SOLUTION_DEFAULT_VALUE);*/
 
-        InAppEncryptionTransactionObject inAppEncryptionTransactionObject = new InAppEncryptionTransactionObject(
+        InAppEnvelopeEncryptionTransactionObject inAppEncryptionTransactionObject = new InAppEnvelopeEncryptionTransactionObject(
                 merchantId, merchantReferenceCode, card, bill, inAppEncryptPaymentDataService, CLIENT_LIBRARY/*, encryptedPayment*/);
         return inAppEncryptionTransactionObject;
     }

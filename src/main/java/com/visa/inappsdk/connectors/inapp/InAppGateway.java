@@ -8,7 +8,7 @@ import com.visa.inappsdk.connectors.inapp.envelopes.InAppEncryptEnvelope;
 import com.visa.inappsdk.connectors.inapp.receivers.TransactionResultReceiver;
 import com.visa.inappsdk.datamodel.SDKGateway;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponse;
-import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
 import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 
 /**
@@ -30,7 +30,7 @@ class InAppGateway extends SDKGateway implements TransactionResultReceiver.Recei
     }
 
     @Override
-    protected boolean performEncryption(SDKTransactionObject transactionObject, SDKApiConnectionCallback applicationConnectionCallback) {
+    protected boolean performEncryption(InAppTransactionObject transactionObject, SDKApiConnectionCallback applicationConnectionCallback) {
         if(transactionInProgress)
             return transactionInProgress;
         if (transactionObject == null)

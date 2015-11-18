@@ -9,7 +9,7 @@ import java.util.HashMap;
  * 
  * @author fzubair
  */
-public abstract class InAppTransactionObject {
+public abstract class InAppEnvelopeTransactionObject {
 
 	public final String MERCHANT_ID = "merchantID";
 	public final String MERCHANT_REFERENCE_CODE = "merchantReferenceCode";

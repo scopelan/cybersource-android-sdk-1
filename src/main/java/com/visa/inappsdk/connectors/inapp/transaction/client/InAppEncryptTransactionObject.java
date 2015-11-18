@@ -1,15 +1,15 @@
-package com.visa.inappsdk.datamodel.transaction;
+package com.visa.inappsdk.connectors.inapp.transaction.client;
 
-import static com.visa.inappsdk.datamodel.transaction.SDKTransactionType.SDK_TRANSACTION_ENCRYPTION;
+import static com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionType.SDK_TRANSACTION_ENCRYPTION;
 
 /**
  * Provides data for refund transaction
  * 
  * @author fzubair
  */
-final class SDKEncryptTransactionObject extends SDKTransactionObject {
+final class InAppEncryptTransactionObject extends InAppTransactionObject {
 
-	private SDKEncryptTransactionObject(Builder builder)
+	private InAppEncryptTransactionObject(Builder builder)
 	{
 		this.transactionType = builder.transactionType;
 		this.merchantReferenceCode = builder.merchantReferenceCode;
@@ -19,7 +19,7 @@ final class SDKEncryptTransactionObject extends SDKTransactionObject {
         this.billTo = builder.billTo;
 	}
 
-	public static class Builder extends SDKTransactionObject.Builder{
+	public static class Builder extends InAppTransactionObject.Builder{
 
 		public Builder(){
             this.transactionType = SDK_TRANSACTION_ENCRYPTION;
@@ -27,8 +27,8 @@ final class SDKEncryptTransactionObject extends SDKTransactionObject {
 		}
 
         @Override
-		public SDKEncryptTransactionObject build(){
-			return new SDKEncryptTransactionObject(this);
+		public InAppEncryptTransactionObject build(){
+			return new InAppEncryptTransactionObject(this);
 		}
 	}
 }

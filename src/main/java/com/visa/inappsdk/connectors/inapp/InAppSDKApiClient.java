@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.visa.inappsdk.common.SDKCore;
 import com.visa.inappsdk.connectors.inapp.connection.InAppConnectionData;
-import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
 import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 
 import java.lang.ref.WeakReference;
@@ -75,7 +75,7 @@ public class InAppSDKApiClient {
         InAppGateway.dispose();
     }
 
-    public boolean performApi(Api api, SDKTransactionObject transactionObject, String messageSignature){
+    public boolean performApi(Api api, InAppTransactionObject transactionObject, String messageSignature){
         if(api == null)
             throw new NullPointerException("API must not be null");
         if(transactionObject == null)

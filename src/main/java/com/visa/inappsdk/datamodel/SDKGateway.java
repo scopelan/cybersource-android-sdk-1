@@ -1,6 +1,6 @@
 package com.visa.inappsdk.datamodel;
 
-import com.visa.inappsdk.datamodel.transaction.SDKTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
 import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 
 /**
@@ -39,7 +39,7 @@ public abstract class SDKGateway {
 	 * during operation
 	 * @return true if a transaction is already in progress
 	 */
-	protected abstract boolean performEncryption(SDKTransactionObject transactionObject,
+	protected abstract boolean performEncryption(InAppTransactionObject transactionObject,
                                                  SDKApiConnectionCallback applicationConnectionCallback);
 
 	/**

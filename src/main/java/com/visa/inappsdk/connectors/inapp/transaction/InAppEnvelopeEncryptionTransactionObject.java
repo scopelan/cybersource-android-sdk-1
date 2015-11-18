@@ -2,7 +2,6 @@ package com.visa.inappsdk.connectors.inapp.transaction;
 
 import com.visa.inappsdk.connectors.inapp.datamodel.InAppBillTo;
 import com.visa.inappsdk.connectors.inapp.datamodel.InAppCard;
-import com.visa.inappsdk.connectors.inapp.datamodel.InAppPurchaseTotals;
 import com.visa.inappsdk.connectors.inapp.services.InAppEncryptPaymentDataService;
 import com.visa.inappsdk.soap.model.SDKXMLParentNode;
 
@@ -11,7 +10,7 @@ import com.visa.inappsdk.soap.model.SDKXMLParentNode;
  * 
  * Created by fzubair on 10/8/2015.
  */
-public class InAppEncryptionTransactionObject extends InAppTransactionObject {
+public class InAppEnvelopeEncryptionTransactionObject extends InAppEnvelopeTransactionObject {
 
 	public InAppCard card;
 	public InAppBillTo billTo;
@@ -35,10 +34,10 @@ public class InAppEncryptionTransactionObject extends InAppTransactionObject {
 	 * @param encryptPaymentDataService
 	 * @param //shipTo
 	 */
-	public InAppEncryptionTransactionObject(String merchantId, String merchantReferenceCode,
-											InAppCard inAppWebServiceCard, InAppBillTo inAppBillTo,
-											InAppEncryptPaymentDataService encryptPaymentDataService,
-											String clientLibrary) {
+	public InAppEnvelopeEncryptionTransactionObject(String merchantId, String merchantReferenceCode,
+                                                    InAppCard inAppWebServiceCard, InAppBillTo inAppBillTo,
+                                                    InAppEncryptPaymentDataService encryptPaymentDataService,
+                                                    String clientLibrary) {
 		this.merchantID = merchantId;
 		this.merchantReferenceCode = merchantReferenceCode;
 		this.clientLibrary = clientLibrary;
