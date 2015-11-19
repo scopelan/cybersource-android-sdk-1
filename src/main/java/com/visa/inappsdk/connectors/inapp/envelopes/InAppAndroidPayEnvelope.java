@@ -6,8 +6,8 @@ import com.visa.inappsdk.connectors.inapp.datamodel.InAppCard;
 import com.visa.inappsdk.connectors.inapp.responses.InAppResponseObject;
 import com.visa.inappsdk.connectors.inapp.services.InAppEncryptPaymentDataService;
 import com.visa.inappsdk.connectors.inapp.transaction.InAppEnvelopeEncryptionTransactionObject;
-import com.visa.inappsdk.datamodel.response.SDKGatewayResponseType;
 import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
+import com.visa.inappsdk.datamodel.response.SDKGatewayResponseType;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKBillTo;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKCardData;
 import com.visa.inappsdk.soap.model.SDKXMLParentNode;
@@ -15,14 +15,14 @@ import com.visa.inappsdk.soap.model.SDKXMLParentNode;
 import java.io.InputStream;
 
 /**
- * Created by fzubair on 10/7/2015.
+ * Created by fzubair on 11/18/2015.
  */
-public class InAppEncryptEnvelope extends InAppBaseEnvelope {
+public class InAppAndroidPayEnvelope extends InAppBaseEnvelope{
 
-    InAppEncryptEnvelope() {
+    InAppAndroidPayEnvelope() {
     }
 
-    public InAppEncryptEnvelope(InAppTransactionObject transactionObject, String merchantId, String messageSignature) {
+    public InAppAndroidPayEnvelope(InAppTransactionObject transactionObject, String merchantId, String messageSignature) {
         createEnvelopeHeader(merchantId, messageSignature);
         InAppEnvelopeEncryptionTransactionObject encryptionTransactionObject = convertTransactionObject(transactionObject, merchantId);
         createEnvelopeBody(encryptionTransactionObject);
@@ -34,7 +34,7 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
     }
 
     private InAppEnvelopeEncryptionTransactionObject convertTransactionObject(InAppTransactionObject transactionObject,
-                                                                                            String merchantId) {
+                                                                              String merchantId) {
 
         String merchantReferenceCode = transactionObject.getMerchantReferenceCode();
 
@@ -88,7 +88,7 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
 
     @Override
     public SDKGatewayResponseType getResponseType() {
-        return SDKGatewayResponseType.SDK_ENCRYPTION;
+        return SDKGatewayResponseType.SDK_ANDROID_PAY;
     }
 
 /*  protected InAppEncryptEnvelope(Parcel in) {

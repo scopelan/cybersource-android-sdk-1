@@ -14,11 +14,9 @@ public class InAppEnvelopeEncryptionTransactionObject extends InAppEnvelopeTrans
 
 	public InAppCard card;
 	public InAppBillTo billTo;
-	public String clientLibrary;
 
 	public InAppEncryptPaymentDataService encryptPaymentDataService;
 
-    private final String CLIENT_LIBRARY = "clientLibrary";
     public final String PAYMENT_SOLUTION = "paymentSolution";
 
     //public VMposEncryptedPayment encryptedPayment;
@@ -32,7 +30,7 @@ public class InAppEnvelopeEncryptionTransactionObject extends InAppEnvelopeTrans
 	 * @param inAppWebServiceCard
 	 * @param inAppBillTo
 	 * @param encryptPaymentDataService
-	 * @param //shipTo
+     * @param clientLibrary
 	 */
 	public InAppEnvelopeEncryptionTransactionObject(String merchantId, String merchantReferenceCode,
                                                     InAppCard inAppWebServiceCard, InAppBillTo inAppBillTo,
@@ -49,9 +47,6 @@ public class InAppEnvelopeEncryptionTransactionObject extends InAppEnvelopeTrans
 	@Override
 	public void updateEnvelope(SDKXMLParentNode request) {
 		createMerchantData(request);
-		if(this.clientLibrary != null){
-			request.addTextNode(request.getNamespace(), CLIENT_LIBRARY, this.clientLibrary);
-		}
         if (this.billTo != null) {
             this.billTo.updateEnvelope(request);
         }
