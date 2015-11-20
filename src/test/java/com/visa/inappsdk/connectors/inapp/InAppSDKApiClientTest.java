@@ -4,7 +4,7 @@ import android.content.Context;
 import android.test.mock.MockContext;
 
 import com.visa.inappsdk.common.exceptions.SDKInvalidCardException;
-import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
 import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionType;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKCardData;
 
@@ -101,7 +101,7 @@ public class InAppSDKApiClientTest {
     @Test
     public void testConnect() throws Exception {
 /*        assertTrue(apiClient.performApi(InAppSDKApiClient.Api.API_ENCRYPTION, SDKTransactionObject.
-                createTransactionObject(SDKTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
+                createTransactionObject(SDKTransactionType.IN_APP_TRANSACTION_ENCRYPTION) // type of transaction object
                 .merchantReferenceCode("Android_Sample_Code" + "_" + Long.toString(System.currentTimeMillis())) // you can set it to anything meaningful
                 .cardData(prepareDummyCardData()) // card data to be encrypted
                 .build(), "sdfskjdfs"));*/
@@ -135,8 +135,8 @@ public class InAppSDKApiClientTest {
 
     @Test
     public void testApiClientConnectThrowsNullCardDataException() throws Exception {
-        InAppTransactionObject transactionObject = InAppTransactionObject.
-                createTransactionObject(InAppTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
+        InAppTransaction transactionObject = InAppTransaction.
+                createTransactionObject(InAppTransactionType.IN_APP_TRANSACTION_ENCRYPTION) // type of transaction object
                 .cardData(null) // card data to be encrypted
                 .build();
         try
@@ -152,8 +152,8 @@ public class InAppSDKApiClientTest {
 
     @Test
     public void testApiClientConnectThrowsInvalidMessageSignatureException() throws Exception {
-        InAppTransactionObject transactionObject = InAppTransactionObject.
-                createTransactionObject(InAppTransactionType.SDK_TRANSACTION_ENCRYPTION) // type of transaction object
+        InAppTransaction transactionObject = InAppTransaction.
+                createTransactionObject(InAppTransactionType.IN_APP_TRANSACTION_ENCRYPTION) // type of transaction object
                 .cardData(prepareTestCardData()) // card data to be encrypted
                 .build();
         try

@@ -2,13 +2,14 @@ package com.visa.inappsdk.connectors.inapp.transaction.client;
 
 import com.visa.inappsdk.datamodel.transaction.fields.SDKBillTo;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKCardData;
+import com.visa.inappsdk.datamodel.transaction.fields.SDKPurchaseOrder;
 
 /**
- * This class represents a transaction that is sent to a reader and then received back from it.
+ * This class represents a transaction that is sent to the server.
  * 
- * @author fzubair
+ * Created by fzubair on 11/18/2015.
  */
-public abstract class InAppTransactionObject {
+public abstract class InAppTransaction {
 
 	protected String merchantReferenceCode;
 	protected InAppTransactionType transactionType;
@@ -16,11 +17,13 @@ public abstract class InAppTransactionObject {
 	protected String transactionDate;
 	protected SDKCardData cardData;
 	protected SDKBillTo billTo;
+	protected String encryptedPaymentData;
+	protected SDKPurchaseOrder purchaseOrder;
 
-	InAppTransactionObject(Builder builder) {
+	InAppTransaction(Builder builder) {
 	}
 
-    InAppTransactionObject() {
+    InAppTransaction() {
     }
 
 	public String getMerchantReferenceCode() {
@@ -43,8 +46,16 @@ public abstract class InAppTransactionObject {
 		return billTo;
 	}
 
+	public SDKPurchaseOrder getPurchaseOrder() {
+		return purchaseOrder;
+	}
+
 	public InAppTransactionType getTransactionType() {
 		return transactionType;
+	}
+
+	public String getEncryptedPaymentData() {
+		return encryptedPaymentData;
 	}
 
 	/**
@@ -53,12 +64,12 @@ public abstract class InAppTransactionObject {
 	 * @param type transaction type
 	 * @return one of transaction objects
 	 */
-	public static InAppTransactionObject.Builder createTransactionObject(InAppTransactionType type) {
+	public static InAppTransaction.Builder createTransactionObject(InAppTransactionType type) {
 
 		switch (type) {
-			case SDK_TRANSACTION_ENCRYPTION:
+			case IN_APP_TRANSACTION_ENCRYPTION:
                 return new InAppEncryptTransactionObject.Builder();
-            case SDK_TRANSACTION_ANDROID_PAY:
+            case IN_APP_TRANSACTION_ANDROID_PAY:
                 return new InAppAndroidPayTransactionObject.Builder();
             default:
                 return new InAppEncryptTransactionObject.Builder();
@@ -72,33 +83,45 @@ public abstract class InAppTransactionObject {
 		protected String transactionDate;
 		protected SDKCardData cardData;
         protected SDKBillTo billTo;
+		protected String encryptedPaymentData;
+		protected SDKPurchaseOrder purchaseOrder;
 
-        public InAppTransactionObject.Builder merchantReferenceCode(String merchantReferenceCode) {
+        public InAppTransaction.Builder merchantReferenceCode(String merchantReferenceCode) {
             this.merchantReferenceCode = merchantReferenceCode;
             return this;
         }
 
-        public InAppTransactionObject.Builder cardData(SDKCardData cardData) {
+        public InAppTransaction.Builder cardData(SDKCardData cardData) {
             this.cardData = cardData;
             return this;
         }
 
-        public InAppTransactionObject.Builder billTo(SDKBillTo billTo) {
+        public InAppTransaction.Builder billTo(SDKBillTo billTo) {
             this.billTo = billTo;
             return this;
         }
 
-        public InAppTransactionObject.Builder transactionDate(String transactionDate) {
+		public InAppTransaction.Builder purchaseOrder(SDKPurchaseOrder purchaseOrder) {
+			this.purchaseOrder = purchaseOrder;
+			return this;
+		}
+
+        public InAppTransaction.Builder transactionDate(String transactionDate) {
             this.transactionDate = transactionDate;
             return this;
         }
 
-        public InAppTransactionObject.Builder transactionTime(String transactionTime) {
+        public InAppTransaction.Builder transactionTime(String transactionTime) {
             this.transactionTime = transactionTime;
             return this;
         }
 
-        public abstract InAppTransactionObject build();
+		public InAppTransaction.Builder encryptedPaymentData(String encryptedPaymentData) {
+			this.encryptedPaymentData = encryptedPaymentData;
+			return this;
+		}
+
+        public abstract InAppTransaction build();
 
 	}
 }

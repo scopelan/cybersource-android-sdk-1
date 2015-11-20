@@ -12,8 +12,8 @@ import com.visa.inappsdk.soap.model.SDKXMLParentNode;
  */
 public class InAppEnvelopeEncryptionTransactionObject extends InAppEnvelopeTransactionObject {
 
-	public InAppCard card;
-	public InAppBillTo billTo;
+	private InAppCard card;
+	private InAppBillTo billTo;
 
 	public InAppEncryptPaymentDataService encryptPaymentDataService;
 

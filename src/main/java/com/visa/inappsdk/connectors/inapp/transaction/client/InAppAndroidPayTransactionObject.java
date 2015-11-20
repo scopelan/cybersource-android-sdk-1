@@ -1,11 +1,13 @@
 package com.visa.inappsdk.connectors.inapp.transaction.client;
 
-import static com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionType.SDK_TRANSACTION_ANDROID_PAY;
+import static com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionType.IN_APP_TRANSACTION_ANDROID_PAY;
 
 /**
+ * Provides data for Android Pay transaction
+ *
  * Created by fzubair on 11/18/2015.
  */
-final class InAppAndroidPayTransactionObject extends InAppTransactionObject {
+final class InAppAndroidPayTransactionObject extends InAppTransaction {
 
     private InAppAndroidPayTransactionObject(Builder builder)
     {
@@ -16,10 +18,10 @@ final class InAppAndroidPayTransactionObject extends InAppTransactionObject {
         this.billTo = builder.billTo;
     }
 
-    public static class Builder extends InAppTransactionObject.Builder{
+    public static class Builder extends InAppTransaction.Builder{
 
         public Builder(){
-            this.transactionType = SDK_TRANSACTION_ANDROID_PAY;
+            this.transactionType = IN_APP_TRANSACTION_ANDROID_PAY;
             this.merchantReferenceCode = Long.toString(System.currentTimeMillis());
         }
 

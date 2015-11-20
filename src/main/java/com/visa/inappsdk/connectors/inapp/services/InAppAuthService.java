@@ -11,12 +11,9 @@ public class InAppAuthService extends InAppBaseService {
 
 	public final String OBJECT_NAME = "ccAuthService";
 	public final String RUN = "run";
-	public final String COMMERCE_INDICATOR = "commerceIndicator";
-	public final String BILL_PAYMENT = "billPayment";
 	public final String PARTIAL_AUTH_INDICATOR = "partialAuthIndicator";
 
 	public String run;
-    String commerceIndicator;
 	public String partialAuthIndicator;
 
 	/**
@@ -24,10 +21,8 @@ public class InAppAuthService extends InAppBaseService {
 	 *
 	 * @param run
 	 */
-	public InAppAuthService(boolean run, String commerceIndicator,
-							boolean partialAuthIndicator) {
+	public InAppAuthService(boolean run, boolean partialAuthIndicator) {
 		this.run = String.valueOf(run);
-        this.commerceIndicator = commerceIndicator;
 		this.partialAuthIndicator = String.valueOf(partialAuthIndicator);
 	}
 
@@ -37,9 +32,6 @@ public class InAppAuthService extends InAppBaseService {
 			SDKXMLParentNode creditService = request.addNode(request.getNamespace(), OBJECT_NAME);
 			if (this.run != null) {
 				creditService.addAttribute(null, RUN, this.run);
-			}
-			if (this.commerceIndicator != null) {
-				creditService.addTextNode(creditService.getNamespace(), COMMERCE_INDICATOR, commerceIndicator);
 			}
 			if (this.partialAuthIndicator != null) {
 				creditService.addTextNode(creditService.getNamespace(), PARTIAL_AUTH_INDICATOR, partialAuthIndicator);

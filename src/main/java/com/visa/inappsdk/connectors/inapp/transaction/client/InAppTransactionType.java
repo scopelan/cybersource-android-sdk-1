@@ -3,11 +3,12 @@ package com.visa.inappsdk.connectors.inapp.transaction.client;
 /**
  * Enumeration used to indicate the transaction type. Possible states:
  * <ul>
- * <li>SDK_TRANSACTION_ENCRYPTION</li>
+ * <li>IN_APP_TRANSACTION_ENCRYPTION</li>
+ * <li>IN_APP_TRANSACTION_ANDROID_PAY</li>
  * </ul>
  * 
- * @author fzubair
+ * Created by fzubair on 11/18/2015.
  */
 public enum InAppTransactionType {
-    SDK_TRANSACTION_ENCRYPTION, SDK_TRANSACTION_ANDROID_PAY
+    IN_APP_TRANSACTION_ENCRYPTION, IN_APP_TRANSACTION_ANDROID_PAY
 }

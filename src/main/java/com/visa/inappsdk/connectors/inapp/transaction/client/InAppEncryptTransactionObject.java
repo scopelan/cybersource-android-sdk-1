@@ -1,13 +1,13 @@
 package com.visa.inappsdk.connectors.inapp.transaction.client;
 
-import static com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionType.SDK_TRANSACTION_ENCRYPTION;
+import static com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionType.IN_APP_TRANSACTION_ENCRYPTION;
 
 /**
- * Provides data for refund transaction
+ * Provides data for Encrypt transaction
  * 
- * @author fzubair
+ * Created by fzubair on 11/18/2015.
  */
-final class InAppEncryptTransactionObject extends InAppTransactionObject {
+final class InAppEncryptTransactionObject extends InAppTransaction {
 
 	private InAppEncryptTransactionObject(Builder builder)
 	{
@@ -19,10 +19,10 @@ final class InAppEncryptTransactionObject extends InAppTransactionObject {
         this.billTo = builder.billTo;
 	}
 
-	public static class Builder extends InAppTransactionObject.Builder{
+	public static class Builder extends InAppTransaction.Builder{
 
 		public Builder(){
-            this.transactionType = SDK_TRANSACTION_ENCRYPTION;
+            this.transactionType = IN_APP_TRANSACTION_ENCRYPTION;
             this.merchantReferenceCode = Long.toString(System.currentTimeMillis());
 		}
 

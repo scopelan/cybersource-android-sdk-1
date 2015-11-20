@@ -1,6 +1,6 @@
 package com.visa.inappsdk.datamodel;
 
-import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
 import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 
 /**
@@ -34,13 +34,22 @@ public abstract class SDKGateway {
 
 
 	/**
-	 * Performs payment Authorization for the transaction object
+	 * Performs encryption for the provided credit card data object
 	 *
-	 * during operation
 	 * @return true if a transaction is already in progress
 	 */
-	protected abstract boolean performEncryption(InAppTransactionObject transactionObject,
+	protected abstract boolean performEncryption(InAppTransaction transactionObject,
                                                  SDKApiConnectionCallback applicationConnectionCallback);
+
+    /**
+     * Performs Transaction using the Android pay encrypted payment data provided with
+     * the transaction object
+     *
+     * @return true if a transaction is already in progress
+     */
+    protected abstract boolean performAndroidPayTransaction(InAppTransaction transactionObject,
+                                                 SDKApiConnectionCallback applicationConnectionCallback);
+
 
 	/**
 	 * Cleans the gateway instance.

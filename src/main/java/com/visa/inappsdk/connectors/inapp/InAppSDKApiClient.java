@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.visa.inappsdk.common.SDKCore;
 import com.visa.inappsdk.connectors.inapp.connection.InAppConnectionData;
-import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
 import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 
 import java.lang.ref.WeakReference;
@@ -23,7 +23,7 @@ public class InAppSDKApiClient {
     private final SDKApiConnectionCallback connectionCallback;
 
     // endpoint API to be used once the 'performApi' method is invoked
-    public enum Api {API_ENCRYPTION}
+    public enum Api {API_ENCRYPTION, API_ANDROID_PAY}
 
     private InAppSDKApiClient(Builder builder) {
         this.context = builder.context;
@@ -75,20 +75,25 @@ public class InAppSDKApiClient {
         InAppGateway.dispose();
     }
 
-    public boolean performApi(Api api, InAppTransactionObject transactionObject, String messageSignature){
+    public boolean performApi(Api api, InAppTransaction transactionObject, String messageSignature){
         if(api == null)
             throw new NullPointerException("API must not be null");
         if(transactionObject == null)
             throw new NullPointerException("Transaction Object must not be null");
-        if(transactionObject.getCardData() == null)
-            throw new NullPointerException("Missing fields: Card Data must not be null");
         if(messageSignature == null || messageSignature.isEmpty())
             throw new NullPointerException("Invalid Message Signature");
 
         InAppGateway.getGateway().setMessageSignature(messageSignature);
         switch (api){
             case API_ENCRYPTION:
+                if(transactionObject.getCardData() == null)
+                    throw new NullPointerException("Missing fields: Card Data must not be null");
                 return InAppGateway.getGateway().performEncryption(transactionObject, this.connectionCallback);
+            case API_ANDROID_PAY:
+                if(transactionObject.getPurchaseOrder() == null)
+                    throw new NullPointerException("Missing fields: Purchase Order must not be null");
+                return InAppGateway.getGateway().performAndroidPayTransaction(transactionObject,
+                        this.connectionCallback);
             default:
                 return false;
         }

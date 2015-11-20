@@ -7,7 +7,7 @@ import com.visa.inappsdk.connectors.inapp.responses.InAppResponseObject;
 import com.visa.inappsdk.connectors.inapp.services.InAppEncryptPaymentDataService;
 import com.visa.inappsdk.connectors.inapp.transaction.InAppEnvelopeEncryptionTransactionObject;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponseType;
-import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKBillTo;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKCardData;
 import com.visa.inappsdk.soap.model.SDKXMLParentNode;
@@ -22,7 +22,7 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
     InAppEncryptEnvelope() {
     }
 
-    public InAppEncryptEnvelope(InAppTransactionObject transactionObject, String merchantId, String messageSignature) {
+    public InAppEncryptEnvelope(InAppTransaction transactionObject, String merchantId, String messageSignature) {
         createEnvelopeHeader(merchantId, messageSignature);
         InAppEnvelopeEncryptionTransactionObject encryptionTransactionObject = convertTransactionObject(transactionObject, merchantId);
         createEnvelopeBody(encryptionTransactionObject);
@@ -33,7 +33,7 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
         paymentObject.updateEnvelope(request);
     }
 
-    private InAppEnvelopeEncryptionTransactionObject convertTransactionObject(InAppTransactionObject transactionObject,
+    private InAppEnvelopeEncryptionTransactionObject convertTransactionObject(InAppTransaction transactionObject,
                                                                                             String merchantId) {
 
         String merchantReferenceCode = transactionObject.getMerchantReferenceCode();

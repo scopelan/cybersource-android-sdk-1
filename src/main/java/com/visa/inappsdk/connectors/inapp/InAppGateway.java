@@ -8,7 +8,7 @@ import com.visa.inappsdk.connectors.inapp.envelopes.InAppEncryptEnvelope;
 import com.visa.inappsdk.connectors.inapp.receivers.TransactionResultReceiver;
 import com.visa.inappsdk.datamodel.SDKGateway;
 import com.visa.inappsdk.datamodel.response.SDKGatewayResponse;
-import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionObject;
+import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
 import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
 
 /**
@@ -30,7 +30,25 @@ class InAppGateway extends SDKGateway implements TransactionResultReceiver.Recei
     }
 
     @Override
-    protected boolean performEncryption(InAppTransactionObject transactionObject, SDKApiConnectionCallback applicationConnectionCallback) {
+    protected boolean performEncryption(InAppTransaction transactionObject, SDKApiConnectionCallback applicationConnectionCallback) {
+        if(transactionInProgress)
+            return transactionInProgress;
+        if (transactionObject == null)
+            return false;
+
+        registerResultReceiver();
+        transactionInProgress = true;
+        this.connectionCallback = applicationConnectionCallback;
+        InAppEncryptEnvelope envelope = new InAppEncryptEnvelope(transactionObject, merchantId,
+                messageSignature);
+        if (envelope == null)
+            return false;
+        InAppConnectionService.startActionConnect(InAppSDKApiClient.getContext().get(), envelope, resultReceiver);
+        return transactionInProgress;
+    }
+
+    @Override
+    protected boolean performAndroidPayTransaction(InAppTransaction transactionObject, SDKApiConnectionCallback applicationConnectionCallback) {
         if(transactionInProgress)
             return transactionInProgress;
         if (transactionObject == null)

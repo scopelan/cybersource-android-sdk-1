@@ -43,7 +43,10 @@ public abstract class InAppBaseEnvelope extends SDKBaseSoapEnvelope {
     protected static final String HEADER_PASSWORD_TYPE_VALUE_DIGEST = "PasswordDigest";
     // -- Faizan -- added this field to provide uniqueness for the sdk identity
     // TODO: always update this version of client library with every new version release of the SDK
-    protected static final String CLIENT_LIBRARY = "InAppSDK Android v1.0.0";
+    protected static final String CLIENT_LIBRARY = "InAppSDK Android v2.0.0";
+    protected static final String PAYMENT_SOLUTION = "006"; // 006 for Android Pay
+
+    public final static String DESCRIPTOR_FID = "RklEPUNPTU1PTi5BTkRST0lELklOQVBQLlBBWU1FTlQ=";
 
     protected String merchantId;
     protected String messageSignature;
