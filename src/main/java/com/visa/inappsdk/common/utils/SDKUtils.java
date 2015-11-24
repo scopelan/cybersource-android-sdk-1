@@ -243,7 +243,7 @@ public class SDKUtils {
 		urlConnection.setReadTimeout(RECIEVE_DATA_TIMEOUT);
 		urlConnection.setDoOutput(doOutput);
 		urlConnection.setDoInput(true);
-		android.util.Log.d("VMposUtils", "Connection: " + requestMethod + " -to- " + urlString);
+		//android.util.Log.d("VMposUtils", "Connection: " + requestMethod + " -to- " + urlString);
 		return urlConnection;
 	}
 
