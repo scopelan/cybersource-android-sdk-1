@@ -1,6 +1,7 @@
 package com.visa.inappsdk.connectors.inapp.envelopes;
 
 import com.visa.inappsdk.common.error.SDKError;
+import com.visa.inappsdk.common.utils.SDKUtils;
 import com.visa.inappsdk.connectors.inapp.datamodel.InAppBillTo;
 import com.visa.inappsdk.connectors.inapp.datamodel.InAppEncryptedPayment;
 import com.visa.inappsdk.connectors.inapp.datamodel.InAppItem;
@@ -43,7 +44,6 @@ public class InAppAndroidPayEnvelope extends InAppBaseEnvelope{
 
     private InAppEnvelopeAndroidPayTransactionObject convertTransactionObject(InAppTransaction transactionObject,
                                                                               String merchantId) {
-
         String merchantReferenceCode = transactionObject.getMerchantReferenceCode();
 
         SDKBillTo billTo = transactionObject.getBillTo();
@@ -62,7 +62,10 @@ public class InAppAndroidPayEnvelope extends InAppBaseEnvelope{
         InAppPurchaseTotals purchaseTotals = null;
         if(purchaseOrder != null) {
             purchaseTotals = new InAppPurchaseTotals(
-                    purchaseOrder.getCurrency().name(), getGatewayAmountString(purchaseOrder.getGrandTotalAmount()));
+                    purchaseOrder.getCurrency().name(),
+                    SDKUtils.getGatewayAmountStringFromBigDecimal
+                            (purchaseOrder.getGrandTotalAmount())
+            );
             List<SDKLineItem> lineItems = purchaseOrder.getLineItems();
             if (lineItems != null) {
                 items = new ArrayList<>();
@@ -80,8 +83,12 @@ public class InAppAndroidPayEnvelope extends InAppBaseEnvelope{
         }
 
         String encryptedPaymentData = transactionObject.getEncryptedPaymentData();
+        // TODO: CREATE SEC BLOB OUT OF THIS ANDROID PAY BLOB
+        String secBlobEncryptedPayment = createSecServiceJson(encryptedPaymentData);
+        secBlobEncryptedPayment = SDKUtils.getBase64Blob(secBlobEncryptedPayment);
+
         InAppEncryptedPayment inAppEncryptedPayment = new InAppEncryptedPayment
-                (DESCRIPTOR_FID, encryptedPaymentData);
+                (DESCRIPTOR_FID, secBlobEncryptedPayment);
 
         InAppEnvelopeAndroidPayTransactionObject inAppEnvelopeAndroidPayTransactionObject =
                 new InAppEnvelopeAndroidPayTransactionObject(merchantId, merchantReferenceCode,
@@ -89,6 +96,14 @@ public class InAppAndroidPayEnvelope extends InAppBaseEnvelope{
                         inAppEncryptedPayment);
         return inAppEnvelopeAndroidPayTransactionObject;
     }
+
+    private String createSecServiceJson(String androidPayBlob){
+        String secBlob = "{\"publicKeyHash\": \"" + SDKUtils.getPublicKeyHash() + "\"," +
+                "\"version\": \"1.0\"," +
+                "\"data\":" + "\"" + androidPayBlob + "\"}";
+        return secBlob;
+    }
+
 
     @Override
     protected void createEnvelopeHeader(String merchantID, String messageSignature) {
@@ -102,33 +117,11 @@ public class InAppAndroidPayEnvelope extends InAppBaseEnvelope{
 
     @Override
     public InAppResponseObject parseResponse(InputStream inputStream) {
-        return InAppResponseObject.createEncryptionResponse(inputStream, getResponseType());
+        return InAppResponseObject.createAndroidPayAuthResponse(inputStream, getResponseType());
     }
 
     @Override
     public SDKGatewayResponseType getResponseType() {
         return SDKGatewayResponseType.SDK_ANDROID_PAY;
     }
-
-    public String getGatewayAmountString(BigDecimal value){
-        BigDecimal amount = value.setScale(2, RoundingMode.CEILING);
-        return amount.toPlainString();
-    }
-
-/*  protected InAppEncryptEnvelope(Parcel in) {
-        super(in);
-    }
-
-    public static final Parcelable.Creator<InAppEncryptEnvelope> CREATOR = new Parcelable.Creator<InAppEncryptEnvelope>() {
-
-        @Override
-        public InAppEncryptEnvelope createFromParcel(Parcel in) {
-            return new InAppEncryptEnvelope(in);
-        }
-
-        @Override
-        public InAppEncryptEnvelope[] newArray(int size) {
-            return new InAppEncryptEnvelope[size];
-        }
-    };*/
 }

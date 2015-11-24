@@ -1,8 +1,10 @@
 package com.visa.inappsdk.connectors.inapp;
 
 import android.content.Context;
+import android.webkit.URLUtil;
 
 import com.visa.inappsdk.common.SDKCore;
+import com.visa.inappsdk.common.utils.SDKUtils;
 import com.visa.inappsdk.connectors.inapp.connection.InAppConnectionData;
 import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
 import com.visa.inappsdk.datamodel.transaction.callbacks.SDKApiConnectionCallback;
@@ -39,6 +41,7 @@ public class InAppSDKApiClient {
         if(builder.apiTestEndpoint != null)
             configureTestEndpoint(builder.apiTestEndpoint);
         setActiveCurrentUrl();
+        SDKUtils.PUBLIC_KEY = builder.publicKey;
         configureConnectionTimeout(builder.connectionTimeout);
     }
 
@@ -107,6 +110,7 @@ public class InAppSDKApiClient {
         private String transactionNamespace = null;
         private String apiProdEndpoint = null;
         private String apiTestEndpoint = null;
+        private String publicKey = null;
         private int connectionTimeout;
 
         public Builder(Context context, Environment environment, String merchantID){
@@ -136,6 +140,11 @@ public class InAppSDKApiClient {
 
         public InAppSDKApiClient.Builder sdkApiTestEndpoint(String apiTestEndpoint) {
             this.apiTestEndpoint = apiTestEndpoint;
+            return this;
+        }
+
+        public InAppSDKApiClient.Builder publicKey(String publicKey) {
+            this.publicKey = publicKey;
             return this;
         }
 

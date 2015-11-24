@@ -3,7 +3,7 @@ package com.visa.inappsdk.datamodel;
 import com.visa.inappsdk.common.error.SDKGatewayError;
 
 /**
- * Allows to get @VMposGatewayError from error code.
+ * Allows to get @SDKGatewayError from error code.
  * 
  * @author fzubair
  */

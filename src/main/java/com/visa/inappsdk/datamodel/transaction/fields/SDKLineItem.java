@@ -56,6 +56,10 @@ public final class SDKLineItem {
 				this.taxAmount = taxAmount;
 			return this;
 		}
+
+		public SDKLineItem build(){
+			return new SDKLineItem(this);
+		}
 	}
 
 	/**

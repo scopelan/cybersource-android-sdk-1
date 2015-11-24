@@ -56,18 +56,9 @@ public class InAppEncryptEnvelope extends InAppBaseEnvelope {
         }
 
         InAppEncryptPaymentDataService inAppEncryptPaymentDataService = new InAppEncryptPaymentDataService(true, null);
-                /*transactionObject.getPurchaseDetails().getCommerceIndicator());*/
-
-        // Faizan -- added the encrypted payment part
-        //VMposEncryptedPayment encryptedPayment = transactionObject.getEncryptedPayment();
-
-/*        VMposEncryptedPayment encryptedPayment = new VMposEncryptedPayment();
-        encryptedPayment.setEncodedData(getIDTechTestBlob());
-        encryptedPayment.setEncodedMetaData(VMposMessageSignature.MetadataEncodedValue);
-        encryptedPayment.setPaymentSolution(VMposMessageSignature.PAYMENT_SOLUTION_DEFAULT_VALUE);*/
 
         InAppEnvelopeEncryptionTransactionObject inAppEncryptionTransactionObject = new InAppEnvelopeEncryptionTransactionObject(
-                merchantId, merchantReferenceCode, card, bill, inAppEncryptPaymentDataService, CLIENT_LIBRARY/*, encryptedPayment*/);
+                merchantId, merchantReferenceCode, card, bill, inAppEncryptPaymentDataService, CLIENT_LIBRARY);
         return inAppEncryptionTransactionObject;
     }
 

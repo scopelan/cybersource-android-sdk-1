@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.visa.inappsdk.common.error.SDKError;
+import com.visa.inappsdk.connectors.inapp.envelopes.InAppAndroidPayEnvelope;
 import com.visa.inappsdk.connectors.inapp.envelopes.InAppEncryptEnvelope;
 import com.visa.inappsdk.connectors.inapp.receivers.TransactionResultReceiver;
 import com.visa.inappsdk.datamodel.SDKGateway;
@@ -57,7 +58,7 @@ class InAppGateway extends SDKGateway implements TransactionResultReceiver.Recei
         registerResultReceiver();
         transactionInProgress = true;
         this.connectionCallback = applicationConnectionCallback;
-        InAppEncryptEnvelope envelope = new InAppEncryptEnvelope(transactionObject, merchantId,
+        InAppAndroidPayEnvelope envelope = new InAppAndroidPayEnvelope(transactionObject, merchantId,
                 messageSignature);
         if (envelope == null)
             return false;

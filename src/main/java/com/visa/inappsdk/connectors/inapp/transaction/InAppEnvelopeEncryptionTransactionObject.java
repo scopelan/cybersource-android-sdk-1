@@ -19,9 +19,6 @@ public class InAppEnvelopeEncryptionTransactionObject extends InAppEnvelopeTrans
 
     public final String PAYMENT_SOLUTION = "paymentSolution";
 
-    //public VMposEncryptedPayment encryptedPayment;
-    //public String clientLibrary;
-
 	/**
 	 * All fields in constructor are required
 	 * 

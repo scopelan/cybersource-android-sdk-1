@@ -19,8 +19,6 @@ public class SDKXMLNVPNode extends SDKXMLNode {
         super(namespace, name);
     }
 
-    //private VMposCyberSourceNameValuePair nameValuePair;
-
     /**
      * Creates a new XML Element.
      *
@@ -32,13 +30,6 @@ public class SDKXMLNVPNode extends SDKXMLNode {
         this.nameValuePair = nameValuePair;
     }
 
-
-    *//**
-     * @return Text value of this text node XML element.
-     *//*
-    public VMposCyberSourceNameValuePair getNameValuePair() {
-        return nameValuePair;
-    }*/
 
 /*    protected SDKXMLNVPNode(Parcel in){
         super(in);

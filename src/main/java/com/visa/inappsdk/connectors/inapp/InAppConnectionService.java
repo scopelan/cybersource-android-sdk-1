@@ -171,6 +171,7 @@ public class InAppConnectionService extends IntentService {
             SDKGatewayResponse response = (SDKGatewayResponse)result;
             resultData.putParcelable(SERVICE_RESULT_RESPONSE_KEY, response);
             switch (response.getType()) {
+                case SDK_ANDROID_PAY:
                 case SDK_ENCRYPTION:
                     resultReceiver.send(SERVICE_RESULT_CODE_SDK_RESPONSE, resultData);
                     break;

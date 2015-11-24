@@ -31,7 +31,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 /**
- * Provides parsers for responses from CyberSouce Gateway and also is an Object that store parsed data.
+ * Provides parsers for responses from CyberSource Gateway and also is an Object that store parsed data.
  * 
  * Created by fzubair on 10/8/2015.
  */
@@ -43,9 +43,6 @@ public final class InAppResponseObject extends InAppResponseFields {
 	private final static String DECISION_ERROR = "ERROR";
 	private final static String DECISION_REJECT = "REJECT";
 	private final static String DECISION_REVIEW = "REVIEW";
-
-	// Describes if response decision returns success
-	// public VMposCyberSourceResponseDec success;
 
 	// Main Fields
 	public String additionalData; // ccAuthReply
@@ -94,10 +91,10 @@ public final class InAppResponseObject extends InAppResponseFields {
 	 * @param type - type of response
 	 * @return
 	 */
-/*	public static InAppResponseObject createAuthorizationResponse(InputStream inputStream,
+	public static InAppResponseObject createAndroidPayAuthResponse(InputStream inputStream,
 																  SDKGatewayResponseType type) {
 
-		Document doc = parseResponse(inputStream);
+/*		Document doc = parseResponse(inputStream);
 		DOMSource domSource = new DOMSource(doc);
 		StringWriter writer = new StringWriter();
 		StreamResult streamResult = new StreamResult(writer);
@@ -137,8 +134,10 @@ public final class InAppResponseObject extends InAppResponseFields {
 			return result;
 		} else {
 			return null;
-		}
-	}*/
+		}*/
+		return null;
+
+	}
 
 	/**
 	 * Parse EncryptionResponse to InAppResponseObject

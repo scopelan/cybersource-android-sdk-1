@@ -89,6 +89,10 @@ public final class SDKPurchaseOrder {
 			this.currency = currency;
 			return this;
 		}
+
+		public SDKPurchaseOrder build(){
+			return new SDKPurchaseOrder(this);
+		}
 	}
 
 	/**

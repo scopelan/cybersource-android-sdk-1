@@ -16,6 +16,8 @@ final class InAppAndroidPayTransactionObject extends InAppTransaction {
         this.transactionTime = builder.transactionTime;
         this.transactionDate = builder.transactionDate;
         this.billTo = builder.billTo;
+        this.encryptedPaymentData = builder.encryptedPaymentData;
+        this.purchaseOrder = builder.purchaseOrder;
     }
 
     public static class Builder extends InAppTransaction.Builder{
