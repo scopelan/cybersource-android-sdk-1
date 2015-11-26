@@ -17,6 +17,9 @@ import com.visa.inappsdk.datamodel.transaction.fields.SDKLineItem;
 import com.visa.inappsdk.datamodel.transaction.fields.SDKPurchaseOrder;
 import com.visa.inappsdk.soap.model.SDKXMLParentNode;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -27,6 +30,11 @@ import java.util.List;
  * Created by fzubair on 11/18/2015.
  */
 public class InAppAndroidPayEnvelope extends InAppBaseEnvelope{
+
+    public static final String PUBLIC_KEY_HASH = "publicKeyHash";
+    public static final String VERSION = "version";
+    public static final String VERSION_NUMBER = "1.0";
+    public static final String DATA = "data";
 
     InAppAndroidPayEnvelope() {
     }
@@ -98,10 +106,16 @@ public class InAppAndroidPayEnvelope extends InAppBaseEnvelope{
     }
 
     private String createSecServiceJson(String androidPayBlob){
-        String secBlob = "{\"publicKeyHash\": \"" + SDKUtils.getPublicKeyHash() + "\"," +
-                "\"version\": \"1.0\"," +
-                "\"data\":" + "\"" + androidPayBlob + "\"}";
-        return secBlob;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(PUBLIC_KEY_HASH, SDKUtils.getPublicKeyHash());
+            jsonObject.put(VERSION, VERSION_NUMBER);
+            jsonObject.put(DATA, androidPayBlob);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject.toString();
     }
 
 

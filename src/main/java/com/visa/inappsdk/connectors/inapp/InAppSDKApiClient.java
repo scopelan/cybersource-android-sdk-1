@@ -22,6 +22,7 @@ public class InAppSDKApiClient {
     public enum Environment {ENV_TEST, ENV_PROD};
     private final Environment environment;
     private final String merchantID;
+    private String publicKey = null;
     private final SDKApiConnectionCallback connectionCallback;
 
     // endpoint API to be used once the 'performApi' method is invoked
@@ -42,6 +43,7 @@ public class InAppSDKApiClient {
             configureTestEndpoint(builder.apiTestEndpoint);
         setActiveCurrentUrl();
         SDKUtils.PUBLIC_KEY = builder.publicKey;
+        this.publicKey = builder.publicKey;
         configureConnectionTimeout(builder.connectionTimeout);
     }
 
@@ -95,6 +97,8 @@ public class InAppSDKApiClient {
             case API_ANDROID_PAY:
                 if(transactionObject.getPurchaseOrder() == null)
                     throw new NullPointerException("Missing fields: Purchase Order must not be null");
+                if(this.publicKey == null)
+                    throw new NullPointerException("Missing fields: Public Key must not be null");
                 return InAppGateway.getGateway().performAndroidPayTransaction(transactionObject,
                         this.connectionCallback);
             default:

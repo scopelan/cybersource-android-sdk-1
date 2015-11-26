@@ -59,6 +59,8 @@ public final class InAppResponseObject extends InAppResponseFields {
 
 	// Objects
 	public InAppCcEncryptedPaymentDataReply ccEncryptedPaymentReply;
+    public InAppCcAndroidPayAuthReply ccAuthReply;
+    public InAppPurchaseTotalsReply purchaseTotals;
 
 	// Response type
 	public SDKGatewayResponseType type;
@@ -94,20 +96,8 @@ public final class InAppResponseObject extends InAppResponseFields {
 	public static InAppResponseObject createAndroidPayAuthResponse(InputStream inputStream,
 																  SDKGatewayResponseType type) {
 
-/*		Document doc = parseResponse(inputStream);
-		DOMSource domSource = new DOMSource(doc);
-		StringWriter writer = new StringWriter();
-		StreamResult streamResult = new StreamResult(writer);
-		TransformerFactory tf = TransformerFactory.newInstance();
-		Transformer transformer = null;
-		try {
-			transformer = tf.newTransformer();
-			transformer.transform(domSource, streamResult);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		Log.d("Encrypt Response", writer.toString());
+		Document doc = parseResponse(inputStream);
+		getResponseStringWriter(doc);
 
 		if (doc != null) {
 
@@ -116,27 +106,25 @@ public final class InAppResponseObject extends InAppResponseFields {
 
 			NodeList nl = doc.getElementsByTagName(REPLY_MESSAGE);
 
-			Element replay = (Element)(nl.item(0));
-			setDefaultFields(result, replay);
-			result.additionalData = getValue(replay, ADDITIONAL_DATA);
-			result.receiptNumber = getValue(replay, RECEIPT_NUMBER);
+			Element reply = (Element)(nl.item(0));
+			setDefaultFields(result, reply);
+			result.additionalData = getValue(reply, ADDITIONAL_DATA);
+			result.receiptNumber = getValue(reply, RECEIPT_NUMBER);
 
-			Element pTotals = (Element)(replay.getElementsByTagName(PURCHASE_TOTALS).item(0));
+			Element pTotals = (Element)(reply.getElementsByTagName(PURCHASE_TOTALS).item(0));
 			if (pTotals != null) {
 				result.purchaseTotals = getPurchaseTotalsReply(pTotals);
 			}
 
-			Element ccAuthReplay = (Element)(replay.getElementsByTagName(CC_AUTH_REPLAY).item(0));
+			Element ccAuthReplay = (Element)(reply.getElementsByTagName(CC_AUTH_REPLY).item(0));
 			if (ccAuthReplay != null) {
-				result.ccAuthReply = getAuthReply(ccAuthReplay);
+				result.ccAuthReply = getAndroidPayAuthReply(ccAuthReplay);
 			}
 
 			return result;
 		} else {
 			return null;
-		}*/
-		return null;
-
+		}
 	}
 
 	/**
@@ -220,16 +208,16 @@ public final class InAppResponseObject extends InAppResponseFields {
 		return error;
 	}
 
-	private static void setDefaultFields(InAppResponseObject result, Element replay) {
-		result.decision = getDecisionType(getValue(replay, DECISION));
-		result.invalidField = getValue(replay, INVALID_FIELD);
-		result.merchantReferenceCode = getValue(replay, MERCHANT_REFERENCE_CODE);
-		result.missingField = getValue(replay, MISSING_FIELD);
-		result.reasonCode = getValue(replay, REASON_CODE);
-		result.requestID = getValue(replay, REQUEST_ID);
-		result.requestToken = getValue(replay, REQUEST_TOKEN);
+	private static void setDefaultFields(InAppResponseObject result, Element reply) {
+		result.decision = getDecisionType(getValue(reply, DECISION));
+		result.invalidField = getValue(reply, INVALID_FIELD);
+		result.merchantReferenceCode = getValue(reply, MERCHANT_REFERENCE_CODE);
+		result.missingField = getValue(reply, MISSING_FIELD);
+		result.reasonCode = getValue(reply, REASON_CODE);
+		result.requestID = getValue(reply, REQUEST_ID);
+		result.requestToken = getValue(reply, REQUEST_TOKEN);
 
-		Element icsMsg = (Element)(replay.getElementsByTagName(ICS_MESSAGE).item(0));
+		Element icsMsg = (Element)(reply.getElementsByTagName(ICS_MESSAGE).item(0));
 		if (icsMsg != null) {
 			result.icsMessage = getICSMessageReply(icsMsg);
 		}
@@ -264,63 +252,69 @@ public final class InAppResponseObject extends InAppResponseFields {
         return icsMessageReply;
     }
 
+    private static InAppPurchaseTotalsReply getPurchaseTotalsReply(Element element) {
+        InAppPurchaseTotalsReply result = new InAppPurchaseTotalsReply();
+        result.currency = getValue(element, PURCHASE_TOTALS_CURRENCY);
+        return result;
+    }
 
-/*	private static InAppCcAuthReply getAuthReply(Element element) {
 
-		InAppCcAuthReply ccAuthReply = new InAppCcAuthReply();
+	private static InAppCcAndroidPayAuthReply getAndroidPayAuthReply(Element element) {
 
-		ccAuthReply.accountBalance = getValue(element, CC_AUTH_REPLAY_ACCOUNT_BALANCE);
-		ccAuthReply.accountBalanceCurrency = getValue(element, CC_AUTH_REPLAY_ACCOUNT_BALANCE_CURRENCY);
-		ccAuthReply.accountBalanceSign = getValue(element, CC_AUTH_REPLAY_ACCOUNT_BALANCE_SIGN);
-		ccAuthReply.affluenceIndicator = getValue(element, CC_AUTH_REPLAY_AFFLUENCE_INDICATOR);
-		ccAuthReply.amount = getValue(element, CC_AUTH_REPLAY_AMOUNT);
-		ccAuthReply.authorizationCode = getValue(element, CC_AUTH_REPLAY_AUTHORIZATION_CODE);
-		ccAuthReply.authorizedDateTime = getValue(element, CC_AUTH_REPLAY_AUTHORIZED_DATE_TIME);
-		ccAuthReply.avsCode = getValue(element, CC_AUTH_REPLAY_AVS_CODE);
-		ccAuthReply.avsCodeRaw = getValue(element, CC_AUTH_REPLAY_AVS_CODE_RAW);
-		ccAuthReply.cardCategory = getValue(element, CC_AUTH_REPLAY_CARD_CATEGORY);
-		ccAuthReply.cardCommercial = getValue(element, CC_AUTH_REPLAY_CARD_COMMERCIAL);
-		ccAuthReply.cardGroup = getValue(element, CC_AUTH_REPLAY_CARD_GROUP);
-		ccAuthReply.cardHealthcare = getValue(element, CC_AUTH_REPLAY_CARD_HEALTHCARE);
-		ccAuthReply.cardIssuerCountry = getValue(element, CC_AUTH_REPLAY_CARD_ISSUER_COUNTRY);
-		ccAuthReply.cardLevel3Eligible = getValue(element, CC_AUTH_REPLAY_CARD_LEVEL_3_ELIGIBLE);
-		ccAuthReply.cardPayroll = getValue(element, CC_AUTH_REPLAY_CARD_PAYROLL);
-		ccAuthReply.cardPINlessDebit = getValue(element, CC_AUTH_REPLAY_CARD_PINLESS_DEBIT);
-		ccAuthReply.cardPrepaid = getValue(element, CC_AUTH_REPLAY_CARD_PREPAID);
-		ccAuthReply.cardRegulated = getValue(element, CC_AUTH_REPLAY_CARD_REGULATED);
-		ccAuthReply.cardSignatureDebit = getValue(element, CC_AUTH_REPLAY_CARD_SIGNATURE_DEBIT);
-		ccAuthReply.cavvResponseCode = getValue(element, CC_AUTH_REPLAY_CAVV_RESPONSE_CODE);
-		ccAuthReply.cavvResponseCodeRaw = getValue(element, CC_AUTH_REPLAY_CAVV_RESPONSE_CODE_RAW);
-		ccAuthReply.cvCode = getValue(element, CC_AUTH_REPLAY_CV_CODE);
-		ccAuthReply.cvCodeRaw = getValue(element, CC_AUTH_REPLAY_CV_CODE_RAW);
-		ccAuthReply.evEmail = getValue(element, CC_AUTH_REPLAY_EV_EMAIL);
-		ccAuthReply.evEmailRaw = getValue(element, CC_AUTH_REPLAY_EV_EMAIL_RAW);
-		ccAuthReply.evName = getValue(element, CC_AUTH_REPLAY_EV_NAME);
-		ccAuthReply.evNameRaw = getValue(element, CC_AUTH_REPLAY_EV_NAME_RAW);
-		ccAuthReply.evPhoneNumber = getValue(element, CC_AUTH_REPLAY_EV_PHONE_NUMBER);
-		ccAuthReply.evPhoneNumberRaw = getValue(element, CC_AUTH_REPLAY_EV_PHONE_NUMBER_RAW);
-		ccAuthReply.evPostalCode = getValue(element, CC_AUTH_REPLAY_EV_POSTAL_CODE);
-		ccAuthReply.evPostalCodeRaw = getValue(element, CC_AUTH_REPLAY_EV_POSTAL_CODE_RAW);
-		ccAuthReply.evStreet = getValue(element, CC_AUTH_REPLAY_EV_STREET);
-		ccAuthReply.evStreetRaw = getValue(element, CC_AUTH_REPLAY_EV_STREET_RAW);
-		ccAuthReply.forwardCode = getValue(element, CC_AUTH_REPLAY_FORWARD_CODE);
-		ccAuthReply.merchantAdviceCode = getValue(element, CC_AUTH_REPLAY_MERCHANT_ADVICE_CODE);
-		ccAuthReply.merchantAdviceCodeRaw = getValue(element, CC_AUTH_REPLAY_MERCHANT_ADVICE_CODE_RAW);
-		ccAuthReply.ownerMerchantID = getValue(element, CC_AUTH_REPLAY_OWNER_MERCHANT_ID);
-		ccAuthReply.paymentNetworkTransactionID = getValue(element, CC_AUTH_REPLAY_PAYMENT_NETWORK_TRANSACTION_ID);
-		ccAuthReply.personalIDCode = getValue(element, CC_AUTH_REPLAY_PERSONAL_ID_CODE);
-		ccAuthReply.posData = getValue(element, CC_AUTH_REPLAY_POS_DATE);
-		ccAuthReply.processorResponse = getValue(element, CC_AUTH_REPLAY_PROCESSOR_RESPONSE);
-		ccAuthReply.processorTransactionID = getValue(element, CC_AUTH_REPLAY_PROCESSOR_TRANSACTION_ID);
-		ccAuthReply.reasonCode = getValue(element, CC_AUTH_REPLAY_REASON_CODE);
-		ccAuthReply.reconciliationID = getValue(element, CC_AUTH_REPLAY_RECONCILATION_ID);
-		ccAuthReply.referralResponseNumber = getValue(element, CC_AUTH_REPLAY_REFERRAL_RESPONSE_NUMBER);
-		ccAuthReply.requestAmount = getValue(element, CC_AUTH_REPLAY_REQUEST_AMOUNT);
-		ccAuthReply.requestCurrency = getValue(element, CC_AUTH_REPLAY_REQUEST_CURRENCY);
-		ccAuthReply.transactionID = getValue(element, CC_AUTH_REPLAY_TRANSACTION_ID);
+		InAppCcAndroidPayAuthReply ccAuthReply = new InAppCcAndroidPayAuthReply();
+
+		ccAuthReply.accountBalance = getValue(element, CC_AUTH_REPLY_ACCOUNT_BALANCE);
+		ccAuthReply.accountBalanceCurrency = getValue(element, CC_AUTH_REPLY_ACCOUNT_BALANCE_CURRENCY);
+		ccAuthReply.accountBalanceSign = getValue(element, CC_AUTH_REPLY_ACCOUNT_BALANCE_SIGN);
+		ccAuthReply.affluenceIndicator = getValue(element, CC_AUTH_REPLY_AFFLUENCE_INDICATOR);
+		ccAuthReply.amount = getValue(element, CC_AUTH_REPLY_AMOUNT);
+		ccAuthReply.authorizationCode = getValue(element, CC_AUTH_REPLY_AUTHORIZATION_CODE);
+		ccAuthReply.authorizedDateTime = getValue(element, CC_AUTH_REPLY_AUTHORIZED_DATE_TIME);
+		ccAuthReply.avsCode = getValue(element, CC_AUTH_REPLY_AVS_CODE);
+		ccAuthReply.avsCodeRaw = getValue(element, CC_AUTH_REPLY_AVS_CODE_RAW);
+		ccAuthReply.cardCategory = getValue(element, CC_AUTH_REPLY_CARD_CATEGORY);
+		ccAuthReply.cardCommercial = getValue(element, CC_AUTH_REPLY_CARD_COMMERCIAL);
+		ccAuthReply.cardGroup = getValue(element, CC_AUTH_REPLY_CARD_GROUP);
+		ccAuthReply.cardHealthcare = getValue(element, CC_AUTH_REPLY_CARD_HEALTHCARE);
+		ccAuthReply.cardIssuerCountry = getValue(element, CC_AUTH_REPLY_CARD_ISSUER_COUNTRY);
+		ccAuthReply.cardLevel3Eligible = getValue(element, CC_AUTH_REPLY_CARD_LEVEL_3_ELIGIBLE);
+		ccAuthReply.cardPayroll = getValue(element, CC_AUTH_REPLY_CARD_PAYROLL);
+		ccAuthReply.cardPINlessDebit = getValue(element, CC_AUTH_REPLY_CARD_PINLESS_DEBIT);
+		ccAuthReply.cardPrepaid = getValue(element, CC_AUTH_REPLY_CARD_PREPAID);
+		ccAuthReply.cardRegulated = getValue(element, CC_AUTH_REPLY_CARD_REGULATED);
+		ccAuthReply.cardSignatureDebit = getValue(element, CC_AUTH_REPLY_CARD_SIGNATURE_DEBIT);
+		ccAuthReply.cavvResponseCode = getValue(element, CC_AUTH_REPLY_CAVV_RESPONSE_CODE);
+		ccAuthReply.cavvResponseCodeRaw = getValue(element, CC_AUTH_REPLY_CAVV_RESPONSE_CODE_RAW);
+		ccAuthReply.cvCode = getValue(element, CC_AUTH_REPLY_CV_CODE);
+		ccAuthReply.cvCodeRaw = getValue(element, CC_AUTH_REPLY_CV_CODE_RAW);
+		ccAuthReply.evEmail = getValue(element, CC_AUTH_REPLY_EV_EMAIL);
+		ccAuthReply.evEmailRaw = getValue(element, CC_AUTH_REPLY_EV_EMAIL_RAW);
+		ccAuthReply.evName = getValue(element, CC_AUTH_REPLY_EV_NAME);
+		ccAuthReply.evNameRaw = getValue(element, CC_AUTH_REPLY_EV_NAME_RAW);
+		ccAuthReply.evPhoneNumber = getValue(element, CC_AUTH_REPLY_EV_PHONE_NUMBER);
+		ccAuthReply.evPhoneNumberRaw = getValue(element, CC_AUTH_REPLY_EV_PHONE_NUMBER_RAW);
+		ccAuthReply.evPostalCode = getValue(element, CC_AUTH_REPLY_EV_POSTAL_CODE);
+		ccAuthReply.evPostalCodeRaw = getValue(element, CC_AUTH_REPLY_EV_POSTAL_CODE_RAW);
+		ccAuthReply.evStreet = getValue(element, CC_AUTH_REPLY_EV_STREET);
+		ccAuthReply.evStreetRaw = getValue(element, CC_AUTH_REPLY_EV_STREET_RAW);
+		ccAuthReply.forwardCode = getValue(element, CC_AUTH_REPLY_FORWARD_CODE);
+		ccAuthReply.merchantAdviceCode = getValue(element, CC_AUTH_REPLY_MERCHANT_ADVICE_CODE);
+		ccAuthReply.merchantAdviceCodeRaw = getValue(element, CC_AUTH_REPLY_MERCHANT_ADVICE_CODE_RAW);
+		ccAuthReply.ownerMerchantID = getValue(element, CC_AUTH_REPLY_OWNER_MERCHANT_ID);
+		ccAuthReply.paymentNetworkTransactionID = getValue(element, CC_AUTH_REPLY_PAYMENT_NETWORK_TRANSACTION_ID);
+		ccAuthReply.personalIDCode = getValue(element, CC_AUTH_REPLY_PERSONAL_ID_CODE);
+		ccAuthReply.posData = getValue(element, CC_AUTH_REPLY_POS_DATE);
+		ccAuthReply.processorResponse = getValue(element, CC_AUTH_REPLY_PROCESSOR_RESPONSE);
+		ccAuthReply.processorTransactionID = getValue(element, CC_AUTH_REPLY_PROCESSOR_TRANSACTION_ID);
+		ccAuthReply.reasonCode = getValue(element, CC_AUTH_REPLY_REASON_CODE);
+		ccAuthReply.reconciliationID = getValue(element, CC_AUTH_REPLY_RECONCILATION_ID);
+		ccAuthReply.referralResponseNumber = getValue(element, CC_AUTH_REPLY_REFERRAL_RESPONSE_NUMBER);
+		ccAuthReply.requestAmount = getValue(element, CC_AUTH_REPLY_REQUEST_AMOUNT);
+		ccAuthReply.requestCurrency = getValue(element, CC_AUTH_REPLY_REQUEST_CURRENCY);
+		ccAuthReply.transactionID = getValue(element, CC_AUTH_REPLY_TRANSACTION_ID);
 
 		return ccAuthReply;
-	}*/
+	}
 
     private static InAppCcEncryptedPaymentDataReply getEncryptedPaymentReply(Element element) {
 

@@ -63,12 +63,6 @@ public class InAppBillTo implements InAppBaseModel {
         if (this.lastName != null) {
             billTo.addTextNode(billTo.getNamespace(), LAST_NAME, this.lastName);
         }
-        if (this.email != null) {
-            billTo.addTextNode(billTo.getNamespace(), EMAIL, this.email);
-        }
-        if (this.postalCode != null) {
-            billTo.addTextNode(billTo.getNamespace(), POSTAL_CODE, this.postalCode);
-        }
         if (this.street1 != null) {
             billTo.addTextNode(billTo.getNamespace(), STREET1, this.street1);
         }
@@ -81,8 +75,14 @@ public class InAppBillTo implements InAppBaseModel {
         if (this.state != null) {
             billTo.addTextNode(billTo.getNamespace(), STATE, this.state);
         }
+        if (this.postalCode != null) {
+            billTo.addTextNode(billTo.getNamespace(), POSTAL_CODE, this.postalCode);
+        }
         if (this.country != null) {
             billTo.addTextNode(billTo.getNamespace(), COUNTRY, this.country);
+        }
+        if (this.email != null) {
+            billTo.addTextNode(billTo.getNamespace(), EMAIL, this.email);
         }
     }
 }
