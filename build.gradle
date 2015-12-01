@@ -4,7 +4,7 @@ apply plugin: 'com.jfrog.bintray'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'inappsdk'
+    bintrayName = 'cybersource-inapp-android'
 
     publishedGroupId = 'com.cybersource'
     libraryName = 'CYBSInAppSDK'
@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/AuthorizeNet/cybersource-android-sdk'
     gitUrl = 'https://github.com/AuthorizeNet/cybersource-android-sdk.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     developerId = 'fezzubair'
     developerName = 'Faizan Zubair'
