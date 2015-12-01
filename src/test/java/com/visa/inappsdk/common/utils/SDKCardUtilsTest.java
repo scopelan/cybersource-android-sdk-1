@@ -1,7 +1,8 @@
 package com.visa.inappsdk.common.utils;
 
-import com.visa.inappsdk.common.SDKCardBrandType;
-import com.visa.inappsdk.common.exceptions.SDKInvalidCardException;
+import com.cybersource.inappsdk.common.SDKCardBrandType;
+import com.cybersource.inappsdk.common.exceptions.SDKInvalidCardException;
+import com.cybersource.inappsdk.common.utils.SDKCardUtils;
 
 import org.junit.Assert;
 import org.junit.Test;

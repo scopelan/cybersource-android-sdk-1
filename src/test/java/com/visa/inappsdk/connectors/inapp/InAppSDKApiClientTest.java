@@ -3,10 +3,12 @@ package com.visa.inappsdk.connectors.inapp;
 import android.content.Context;
 import android.test.mock.MockContext;
 
-import com.visa.inappsdk.common.exceptions.SDKInvalidCardException;
-import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
-import com.visa.inappsdk.connectors.inapp.transaction.client.InAppTransactionType;
-import com.visa.inappsdk.datamodel.transaction.fields.SDKCardData;
+import com.cybersource.inappsdk.common.exceptions.SDKInvalidCardException;
+import com.cybersource.inappsdk.connectors.inapp.InAppGateway;
+import com.cybersource.inappsdk.connectors.inapp.InAppSDKApiClient;
+import com.cybersource.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
+import com.cybersource.inappsdk.connectors.inapp.transaction.client.InAppTransactionType;
+import com.cybersource.inappsdk.datamodel.transaction.fields.SDKCardData;
 
 import org.junit.After;
 import org.junit.Assert;

@@ -3,9 +3,7 @@ package com.visa.inappsdk;
 import android.content.Intent;
 import android.test.ServiceTestCase;
 
-import com.visa.inappsdk.connectors.inapp.InAppConnectionService;
-
-import java.lang.ref.WeakReference;
+import com.cybersource.inappsdk.connectors.inapp.InAppConnectionService;
 
 /**
  * Created by fzubair on 10/21/2015.
