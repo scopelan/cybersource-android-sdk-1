@@ -4,7 +4,6 @@ import android.content.Context;
 import android.test.mock.MockContext;
 
 import com.cybersource.inappsdk.common.exceptions.SDKInvalidCardException;
-import com.cybersource.inappsdk.connectors.inapp.InAppGateway;
 import com.cybersource.inappsdk.connectors.inapp.InAppSDKApiClient;
 import com.cybersource.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
 import com.cybersource.inappsdk.connectors.inapp.transaction.client.InAppTransactionType;
@@ -94,11 +93,11 @@ public class InAppSDKApiClientTest {
         assertNotNull(apiClient.getEnvironment());
     }
 
-    @Test
+/*    @Test
     public void testDispose() throws Exception {
         InAppSDKApiClient.dispose();
         assertNull(InAppGateway.getGateway());
-    }
+    }*/
 
     @Test
     public void testConnect() throws Exception {
