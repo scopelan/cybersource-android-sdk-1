@@ -15,7 +15,7 @@ ext {
     siteUrl = 'https://github.com/AuthorizeNet/cybersource-android-sdk'
     gitUrl = 'https://github.com/AuthorizeNet/cybersource-android-sdk.git'
 
-    libraryVersion = '1.0.1'
+    libraryVersion = '1.0.0'
 
     developerId = 'fezzubair'
     developerName = 'Faizan Zubair'
