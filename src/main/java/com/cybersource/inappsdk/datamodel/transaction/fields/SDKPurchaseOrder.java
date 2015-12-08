@@ -99,10 +99,13 @@ public final class SDKPurchaseOrder {
 	 * Calculates <code>totalAmount</code> and <code>subtotalAmount</code>.
 	 */
 	public void updateTotals() {
-		for (SDKLineItem item : items) {
-			subtotalAmount = SDKMathUtils.add(subtotalAmount,
-					item.getLineItemsPriceForQuantity());
-			totalTax = SDKMathUtils.add(totalTax, item.getTaxAmount());
+
+		if(items != null) {
+			for (SDKLineItem item : items) {
+				subtotalAmount = SDKMathUtils.add(subtotalAmount,
+						item.getLineItemsPriceForQuantity());
+				totalTax = SDKMathUtils.add(totalTax, item.getTaxAmount());
+			}
 		}
 		grandTotalAmount = subtotalAmount;
 

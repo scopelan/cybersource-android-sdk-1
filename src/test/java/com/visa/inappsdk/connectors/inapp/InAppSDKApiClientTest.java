@@ -3,11 +3,13 @@ package com.visa.inappsdk.connectors.inapp;
 import android.content.Context;
 import android.test.mock.MockContext;
 
+import com.cybersource.inappsdk.common.SDKCurrency;
 import com.cybersource.inappsdk.common.exceptions.SDKInvalidCardException;
 import com.cybersource.inappsdk.connectors.inapp.InAppSDKApiClient;
 import com.cybersource.inappsdk.connectors.inapp.transaction.client.InAppTransaction;
 import com.cybersource.inappsdk.connectors.inapp.transaction.client.InAppTransactionType;
 import com.cybersource.inappsdk.datamodel.transaction.fields.SDKCardData;
+import com.cybersource.inappsdk.datamodel.transaction.fields.SDKPurchaseOrder;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -134,6 +136,8 @@ public class InAppSDKApiClientTest {
         }
     }
 
+    // ************* Encryption API Tests ************* //
+
     @Test
     public void testApiClientConnectThrowsNullCardDataException() throws Exception {
         InAppTransaction transactionObject = InAppTransaction.
@@ -150,6 +154,61 @@ public class InAppSDKApiClientTest {
             assertEquals("Missing fields: Card Data must not be null", e.getMessage());
         }
     }
+
+    // ************* END Encryption API Tests ************* //
+
+    // ************* Android Pay API Tests ************* //
+
+    @Test
+    public void testApiClientConnectThrowsNullPurchaseOrderException() throws Exception {
+        InAppTransaction transactionObject = InAppTransaction.
+                createTransactionObject(InAppTransactionType.IN_APP_TRANSACTION_ANDROID_PAY) // type of transaction object
+                .purchaseOrder(null) // purchase order
+                .build();
+        try
+        {
+            apiClient.performApi(InAppSDKApiClient.Api.API_ANDROID_PAY, transactionObject, "DUMMY_MESSAGE_SIGNATURE");
+            Assert.fail("Should have thrown Null Purchase Order Exception");
+        }
+        catch(NullPointerException e)
+        {
+            assertEquals("Missing fields: Purchase Order must not be null", e.getMessage());
+        }
+    }
+
+    @Test
+    public void testApiClientConnectThrowsNullPublicKeyException() throws Exception {
+
+        apiClient = new InAppSDKApiClient.Builder
+                (context, InAppSDKApiClient.Environment.ENV_TEST, apiLoginID)
+                .sdkConnectionCallback(null) // receive callbacks for connection results
+                .publicKey(null)
+                .build();
+
+        InAppTransaction transactionObject = InAppTransaction.
+                createTransactionObject(InAppTransactionType.IN_APP_TRANSACTION_ANDROID_PAY) // type of transaction object
+                .purchaseOrder(preparePurchaseOrder()) // purchase order
+                .build();
+        try
+        {
+            apiClient.performApi(InAppSDKApiClient.Api.API_ANDROID_PAY, transactionObject, "DUMMY_MESSAGE_SIGNATURE");
+            Assert.fail("Should have thrown Null Public Key Exception");
+        }
+        catch(NullPointerException e)
+        {
+            assertEquals("Missing fields: Public Key must not be null", e.getMessage());
+        }
+    }
+
+    private SDKPurchaseOrder preparePurchaseOrder(){
+        SDKPurchaseOrder purchaseOrder = new SDKPurchaseOrder.Builder()
+                .currency(SDKCurrency.USD)
+                .items(null)
+                .build();
+        return purchaseOrder;
+    }
+
+    // ************* END Android Pay API Tests ************* //
 
     @Test
     public void testApiClientConnectThrowsInvalidMessageSignatureException() throws Exception {

@@ -1,5 +1,6 @@
 package com.cybersource.inappsdk.connectors.inapp.responses;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.cybersource.inappsdk.common.error.SDKGatewayError;
@@ -20,6 +21,7 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -336,33 +338,50 @@ public final class InAppResponseObject extends InAppResponseFields {
         return ccEncryptedPaymentReply;
     }
 
-/*	public SDKGatewayResponse convertAuthorizationToGatewayResponse() {
+	public SDKGatewayResponse convertToGatewayResponse() {
+		if(ccAuthReply != null)
+			return convertAuthorizationToGatewayResponse();
+		else
+			return convertEncryptionToGatewayResponse();
+	}
+
+	private SDKGatewayResponse convertAuthorizationToGatewayResponse() {
 		String dateTime = null;
-		if (ccAuthReply != null && ccAuthReply.authorizedDateTime != null) {
+		if (ccAuthReply != null) {
 			dateTime = ccAuthReply.authorizedDateTime;
 		}
 
-		String date = null;
-		String time = null;
+		String date = null, time = null;
 		if (dateTime != null) {
 			date = SDKUtils.convertToLocalDate(dateTime);
 			time = SDKUtils.convertToLocalTime(dateTime);
 		}
 
 		String authCode = (ccAuthReply != null) ? ccAuthReply.authorizationCode : null;
-        BigDecimal authorizedAmount = BigDecimal.ZERO;
+		BigDecimal authorizedAmount = BigDecimal.ZERO;
 
-		if (!TextUtils.isEmpty(ccAuthReply.amount)) {
-                authorizedAmount = new BigDecimal(ccAuthReply.amount);
+		if (ccAuthReply != null && !TextUtils.isEmpty(ccAuthReply.amount)) {
+			authorizedAmount = new BigDecimal(ccAuthReply.amount);
 		}
 
-		return new SDKGatewayResponse(decision, requestID,
-			SDKResponseReasonCode.getResponseReasonCodeByValueMapping(reasonCode), type, authorizedAmount,
-			authCode, date, time, "");
-	}*/
+		SDKResponseReasonCode sdkResponseReasonCode = SDKResponseReasonCode
+				.getResponseReasonCodeByValueMapping(reasonCode);
 
-    public SDKGatewayResponse convertToGatewayResponse() {
-        String dateTime = ccEncryptedPaymentReply.requestDateTime;
+		return new SDKGatewayResponse.Builder
+				(type, sdkResponseReasonCode, requestID, requestToken)
+				.decision(decision)
+				.date(date)
+				.time(time)
+				.authorizationCode(authCode)
+				.authorizedAmount(authorizedAmount)
+				.build();
+	}
+
+    private SDKGatewayResponse convertEncryptionToGatewayResponse() {
+		String dateTime = null;
+        if(ccEncryptedPaymentReply != null)
+			dateTime = ccEncryptedPaymentReply.requestDateTime;
+
         String date = null, time = null;
         if (dateTime != null) {
             date = SDKUtils.convertToLocalDate(dateTime);
@@ -374,10 +393,10 @@ public final class InAppResponseObject extends InAppResponseFields {
 
         return new SDKGatewayResponse.Builder
                 (type, sdkResponseReasonCode, requestID, requestToken)
-                .setDecision(decision)
-                .setDate(date)
-                .setTime(time)
-                .setEncryptedPaymentData(ccEncryptedPaymentReply.data)
+                .decision(decision)
+                .date(date)
+                .time(time)
+                .encryptedPaymentData(ccEncryptedPaymentReply.data)
                 .build();
     }
 
@@ -387,7 +406,7 @@ public final class InAppResponseObject extends InAppResponseFields {
 
 		SDKGatewayResponse response = new SDKGatewayResponse.Builder
                 (type, sdkResponseReasonCode, result.requestID, result.requestToken)
-                .setDecision(result.decision)
+                .decision(result.decision)
                 .build();
         return response;
     }
