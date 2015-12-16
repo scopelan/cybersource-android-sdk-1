@@ -8,7 +8,7 @@ Jus add this line to your app's `build.gradle` inside the `dependencies` section
 
 ```groovy
     dependencies {
-        compile 'com.cybersource:cybersource-inapp-android:+'
+        compile 'com.cybersource:inappsdk:+'
     }
 ```
 
