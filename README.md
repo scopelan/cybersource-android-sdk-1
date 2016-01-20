@@ -16,8 +16,8 @@ Add this line to your app's `build.gradle` inside the `dependencies` section as 
 
 ### Eclipse
 
-1. Download the Android SDK jar file 'cybersource-inapp-android-x.x.x.jar' from 'cybersource.com/inapp-sdk'.
-2. Include the `cybersource-inapp-android-x.x.x.jar` into the `libs` folder of your Android application project.
+1. Download the Android SDK jar file *cybersource-inapp-android-x.x.x.jar* from `cybersource.com/inapp-sdk`.
+2. Include the *cybersource-inapp-android-x.x.x.jar* into the `libs` folder of your Android application project.
 
 ### Certificates
 The In-App SDK expects the Android app project to have the server certificates placed in its `assets` folder under a new directory named `certificates`.
@@ -26,7 +26,7 @@ The In-App SDK expects the Android app project to have the server certificates p
 2. PRODUCTION ENVIRONMENT: Download the `.cer` file from https://mobile.ic3.com/mpos/transactionProcessor/
 
 ## SDK Usage
-After the installation is succesfully complete, perform the following steps to program an Android app with this SDK.
+After the installation is complete, follow these steps to program an Android app with this SDK.
 
 1. To initiate requests with the SDK, create an API client that will make API requests on your behalf. The In-App SDK API client can be built as follows:
 
@@ -45,7 +45,7 @@ apiClient = new InAppSDKApiClient.Builder (getActivity(),
                                           .build();
 ```
 
-2. To make the API call, you can create a transaction object as follows:
+2. To make the API call, create a transaction object:
 
 ```java
 SDKTransactionObject 
@@ -60,7 +60,7 @@ SDKTransactionObject
   .build();
 ```
 
-3. A card object can be created as follows:
+3. Create a card object:
 
 ```java
 SDKCardData cardData = new SDKCardData.Builder(ACCOUNT_NUMBER,
@@ -71,7 +71,7 @@ SDKCardData cardData = new SDKCardData.Builder(ACCOUNT_NUMBER,
                                                .build();
 ```
 
-4. Billing information can be created as follows:
+4. Create billing information:
 
 ```java
 SDKBillTo billTo = new SDKBillTo.Builder()
@@ -81,7 +81,7 @@ SDKBillTo billTo = new SDKBillTo.Builder()
                 .build();
 ```
 
-5. When the API client and transaction information are ready, you can make a call to perform a specific API.
+5. When the API client and transaction information are ready, you can make a call to perform a specific API function.
 
 ```java
 // Parameters: 
@@ -91,7 +91,7 @@ SDKBillTo billTo = new SDKBillTo.Builder()
 apiClient.performApi(InAppSDKApiClient.Api.API_ENCRYPTION, transactionObject, generateSignature(transactionObject));
 ```
 
-6) To get a response back, the activity/fragment should implement the `SDKApiConnectionCallback` interface.
+6. To get a response back, the activity/fragment should implement the `SDKApiConnectionCallback` interface.
 
 ```java
 @Override
@@ -119,5 +119,5 @@ public void onErrorReceived(SDKError error)
 ```
 
 ##Sample Application
-We have a sample application which demonstrates the SDK usage:  
+We have a sample application that demonstrates the SDK usage:  
    https://github.com/CyberSource/cybersource-android-samples
